@@ -7,5 +7,4 @@ import java.util.UUID;
 
 public interface DepartamentoDao extends ConsultarDao <DepartamentoEntidad, UUID> {
 
-
 }

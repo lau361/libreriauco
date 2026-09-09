@@ -1,4 +1,5 @@
 package co.edu.uco.libreriauco.libreriauco.dao;
 
-public interface CrearDao {
+public interface CrearDao<E> {
+    void crear(E entidad);
 }
