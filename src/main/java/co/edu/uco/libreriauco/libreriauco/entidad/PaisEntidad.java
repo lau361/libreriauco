@@ -1,7 +1,7 @@
 package co.edu.uco.libreriauco.libreriauco.entidad;
 
-import co.edu.uco.libreriauco.libreriauco.Utilitario.UtilId;
-import co.edu.uco.libreriauco.libreriauco.Utilitario.UtilTexto;
+import co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario.UtilId;
+import co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario.UtilTexto;
 
 import java.util.UUID;
 public class PaisEntidad {
@@ -48,8 +48,12 @@ public class PaisEntidad {
                 return this;
             }
 
-            public PaisEntidad Build() {
+            public PaisEntidad build() {
                 return new PaisEntidad(this);
+            }
+
+            public PaisEntidad Build() {
+                return build();
             }
 
         }

@@ -1,4 +1,4 @@
-package co.edu.uco.libreriauco.libreriauco.Utilitario;
+package co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario;
 
 public class UtilNumero {
     public static int cero=0;

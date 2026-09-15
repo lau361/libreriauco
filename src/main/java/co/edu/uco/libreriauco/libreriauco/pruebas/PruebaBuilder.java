@@ -1,10 +1,8 @@
 package co.edu.uco.libreriauco.libreriauco.pruebas;
 
-import co.edu.uco.libreriauco.dominio.PaisDominio;
+import co.edu.uco.libreriauco.libreriauco.dominio.PaisDominio;
 
-import co.edu.uco.libreriauco.libreriauco.Utilitario.UtilId;
-
-import java.util.UUID;
+import co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario.UtilId;
 
 public class PruebaBuilder {
     public static void main(String[] args) {

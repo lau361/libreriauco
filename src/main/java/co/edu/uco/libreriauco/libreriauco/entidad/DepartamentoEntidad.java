@@ -1,8 +1,8 @@
 package co.edu.uco.libreriauco.libreriauco.entidad;
 
-import co.edu.uco.libreriauco.libreriauco.Utilitario.UtilId;
-import co.edu.uco.libreriauco.libreriauco.Utilitario.UtilObjeto;
-import co.edu.uco.libreriauco.libreriauco.Utilitario.UtilTexto;
+import co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario.UtilId;
+import co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario.UtilObjeto;
+import co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario.UtilTexto;
 
 
 import java.util.UUID;
@@ -23,6 +23,7 @@ public class DepartamentoEntidad {
         private DepartamentoEntidad(Builder builder) {
             this.id = builder.id;
             this.nombre = builder.nombre;
+            this.pais = builder.pais;
         }
 
         public UUID getId() {
@@ -41,6 +42,7 @@ public class DepartamentoEntidad {
             public Builder() {
                 id = UtilId.valorDefecto(id);
                 nombre = UtilTexto.vacia;
+                pais = new PaisEntidad.Builder().build();
             }
 
             public Builder id(UUID id) {
@@ -53,15 +55,24 @@ public class DepartamentoEntidad {
                 return this;
             }
 
-            public DepartamentoEntidad Build() {
+            public Builder pais(PaisEntidad pais) {
+                this.pais = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(pais, new PaisEntidad.Builder().build());
+                return this;
+            }
+
+            public DepartamentoEntidad build() {
                 return new DepartamentoEntidad(this);
+            }
+
+            public DepartamentoEntidad Build() {
+                return build();
             }
 
             public PaisEntidad getPais() {
                 return pais;
             }
             public void setPais(PaisEntidad pais) {
-                this.pais = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(pais, new PaisEntidad.Builder().Build());
+                this.pais = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(pais, new PaisEntidad.Builder().build());
             }
         }
 

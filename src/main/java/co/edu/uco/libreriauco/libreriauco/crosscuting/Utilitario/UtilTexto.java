@@ -1,4 +1,4 @@
-package co.edu.uco.libreriauco.libreriauco.Utilitario;
+package co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario;
 
 public class UtilTexto {
     //The objective of this class is proporcionar operacioes comunes para trabajar con String

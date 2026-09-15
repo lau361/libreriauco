@@ -1,8 +1,8 @@
 package co.edu.uco.libreriauco.libreriauco.dominio;
 
-import co.edu.uco.libreriauco.libreriauco.Utilitario.UtilId;
-import co.edu.uco.libreriauco.libreriauco.Utilitario.UtilObjeto;
-import co.edu.uco.libreriauco.libreriauco.Utilitario.UtilTexto;
+import co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario.UtilId;
+import co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario.UtilObjeto;
+import co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario.UtilTexto;
 
 import java.util.UUID;
 

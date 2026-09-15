@@ -1,9 +1,9 @@
 package co.edu.uco.libreriauco.libreriauco.entidad;
 
-import co.edu.uco.libreriauco.libreriauco.Utilitario.UtilId;
+import co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario.UtilId;
 
-import co.edu.uco.libreriauco.libreriauco.Utilitario.UtilTexto;
-import co.edu.uco.libreriauco.libreriauco.Utilitario.UtilObjeto;
+import co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario.UtilTexto;
+import co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario.UtilObjeto;
 
 import java.util.UUID;
 
@@ -22,7 +22,7 @@ public class CiudadEntidad {
         private CiudadEntidad(Builder builder) {
             this.id = builder.id;
             this.nombre = builder.nombre;
-            this.departamento = new DepartamentoEntidad.Builder().Build();
+            this.departamento = builder.departamento;
         }
 
 
@@ -41,7 +41,7 @@ public class CiudadEntidad {
             public Builder() {
                 id = UtilId.valorDefecto(id);
                 nombre = UtilTexto.vacia;
-                departamento = new DepartamentoEntidad.Builder().Build();
+                departamento = new DepartamentoEntidad.Builder().build();
             }
 
             public Builder id(UUID id) {
@@ -55,12 +55,16 @@ public class CiudadEntidad {
             }
 
             public Builder departamento(DepartamentoEntidad departamento) {
-                this.departamento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(departamento, new DepartamentoEntidad.Builder().Build());
+                this.departamento = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(departamento, new DepartamentoEntidad.Builder().build());
                 return this;
             }
 
-            public CiudadEntidad Build() {
+            public CiudadEntidad build() {
                 return new CiudadEntidad(this);
+            }
+
+            public CiudadEntidad Build() {
+                return build();
             }
 
         }
