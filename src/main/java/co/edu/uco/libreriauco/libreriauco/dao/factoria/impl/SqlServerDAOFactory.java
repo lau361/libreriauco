@@ -24,7 +24,7 @@ public class SqlServerDAOFactory extends DaoFactory {
 
     @Override
     public PaisDAO obtenerPaisDAO() {
-        return new PaisSqlServerDao();
+        return new PaisSqlServerDao(getConexion());
     }
 
     @Override
