@@ -1,12 +1,18 @@
-package co.edu.uco.libreriauco.libreriauco.dao.entidad.SqlServer;
+package co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.SqlServer;
 
-import co.edu.uco.libreriauco.libreriauco.dao.entidad.DepartamentoDao;
+import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.DepartamentoDao;
+import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.SqlDAO;
 import co.edu.uco.libreriauco.libreriauco.entidad.DepartamentoEntidad;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 
-public class DepartamentoSqlServerDao implements DepartamentoDao{
+public class DepartamentoSqlServerDao extends SqlDAO implements DepartamentoDao{
+
+    public DepartamentoSqlServerDao(Connection conexion) {
+        super(conexion);
+    }
 
     @Override
     public DepartamentoEntidad consultarPorId(UUID uuid) {

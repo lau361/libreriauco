@@ -1,11 +1,11 @@
 package co.edu.uco.libreriauco.libreriauco.dao.factoria.impl;
 
-import co.edu.uco.libreriauco.libreriauco.dao.entidad.CiudadDao;
-import co.edu.uco.libreriauco.libreriauco.dao.entidad.DepartamentoDao;
-import co.edu.uco.libreriauco.libreriauco.dao.entidad.PaisDAO;
-import co.edu.uco.libreriauco.libreriauco.dao.entidad.SqlServer.CiudadSqlServerDao;
-import co.edu.uco.libreriauco.libreriauco.dao.entidad.SqlServer.DepartamentoSqlServerDao;
-import co.edu.uco.libreriauco.libreriauco.dao.entidad.SqlServer.PaisSqlServerDao;
+import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.CiudadDao;
+import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.DepartamentoDao;
+import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.PaisDAO;
+import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.SqlServer.CiudadSqlServerDao;
+import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.SqlServer.DepartamentoSqlServerDao;
+import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.SqlServer.PaisSqlServerDao;
 import co.edu.uco.libreriauco.libreriauco.dao.factoria.DaoFactory;
 
 import java.sql.Connection;
@@ -31,16 +31,16 @@ public class SqlServerDAOFactory extends DaoFactory {
 
     @Override
     public PaisDAO obtenerPaisDAO() {
-        return new PaisSqlServerDao();
+        return new PaisSqlServerDao(getConexion());
     }
 
     @Override
     public DepartamentoDao obtenerDepartamentoDAO() {
-        return new DepartamentoSqlServerDao();
+        return new DepartamentoSqlServerDao(getConexion());
     }
 
     @Override
     public CiudadDao obtenerCiudadDAO() {
-        return new CiudadSqlServerDao();
+        return new CiudadSqlServerDao(getConexion());
     }
 }

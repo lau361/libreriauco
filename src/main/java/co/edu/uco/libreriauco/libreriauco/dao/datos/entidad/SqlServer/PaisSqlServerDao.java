@@ -1,13 +1,19 @@
-package co.edu.uco.libreriauco.libreriauco.dao.entidad.SqlServer;
+package co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.SqlServer;
 
-import co.edu.uco.libreriauco.libreriauco.dao.entidad.PaisDAO;
+import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.PaisDAO;
+import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.SqlDAO;
 import co.edu.uco.libreriauco.libreriauco.entidad.PaisEntidad;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.UUID;
 
-public class PaisSqlServerDao  implements PaisDAO {
+public class PaisSqlServerDao extends SqlDAO implements PaisDAO {
 
+
+    public PaisSqlServerDao(Connection conexion) {
+        super(conexion);
+    }
 
     @Override
     public void actualizar(UUID uuid, PaisEntidad entidad) {
@@ -33,7 +39,6 @@ public class PaisSqlServerDao  implements PaisDAO {
    //bn
     @Override
     public void crear(PaisEntidad entidad) {
-
     }
 
     @Override

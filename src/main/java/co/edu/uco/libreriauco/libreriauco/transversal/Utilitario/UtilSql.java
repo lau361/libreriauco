@@ -28,52 +28,99 @@ public class UtilSql {
         }
     }
 
+    public static void asegurarConexionAbierta(Connection conexion){
+        //si la conexion no esta abierta , voy a reportar un problema
+        if(!conexionEstaAbierta(conexion)){
+            var mensajeUsuario= "Mensaje de error por que no es posible continuar con la operacion deseada debido a que la conexion contra la fuente de informacion no esta abierta . Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+            throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario);
+        }
+    }
+
     //se va a crear un metodo generico
     public static void iniciarTransaccion(Connection conexion){
         //la conexion debe estar abierta y la transaccion no puede estar iniciada
-        if(transaccionEstaIniciada(conexion)){
+        // si la transacion esta iniciada ent manda un error
+        if(transaccionEstaIniciada(conexion) || !conexionEstaAbierta(conexion)){
             //si la transaccion ya esta iniciada no se puede hacer nada ent voy a reportar un problema
             var mensajeUsuario= CatalogoMensajes.UtilSql.USUARIO_ERROR_NO_ES_POSIBLE_INICIAR_TRANSACCION_SQL;
             throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario);
+        } else{
+            // si no ent se comienza la transaccion
+            try {
+                // Desactivamos el guardado automático para controlar
+                // cuándo se confirman o se deshacen los cambios
+                conexion.setAutoCommit(false);
+
+            } catch (SQLException exception) {
+                // Si no podemos desactivar el guardado automático,
+                // no podemos iniciar correctamente la transacción
+                var mensajeUsuario = CatalogoMensajes.UtilSql.USUARIO_ERROR_PROBLEMA_INICIANDO_TRANSACCION_SQL;
+                throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario, exception.getMessage(), exception);
+            }
+            catch (Exception exception) {
+                // Si ocurre un error al iniciar la transacción
+                var mensajeUsuario = CatalogoMensajes.UtilSql.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_INICIANDO_TRANSACCION_SQL;
+                throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario, exception.getMessage(), exception);
+            }
         }
-        //aqui es la tarea de como iniciar la transaccion
-
-
     }
+
     public static void confirmarTransaccion(Connection conexion){
         //si la transaccion no esta iniciada error
         if(!transaccionEstaIniciada(conexion)){
             var mensajeUsuario= "Mensaje de error por que no es posible confirmar una transaccion que no fue iniciada";
             throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario);
+        }else{
+            try {
+                conexion.commit();
+            } catch (SQLException exception) {
+                var mensajeUsuario = CatalogoMensajes.UtilSql.USUARIO_ERROR_PROBLEMA_COMFIRMANDO_TRANSACCION_SQL;
+                throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario, exception.getMessage(), exception);
+            }
+            catch (Exception exception) {
+                var mensajeUsuario = CatalogoMensajes.UtilSql.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONFIRMANDO_TRANSACCION_SQL;
+                throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario, exception.getMessage(), exception);
+            }
         }
-        //aqui es la tarea de como confirmar la transaccion
     }
     public static void cancelarTransaccion(Connection conexion){
         //si la transaccion no esta iniciada error ya que no se puede cancelar algo que no se inicio
         if(!transaccionEstaIniciada(conexion)){
             var mensajeUsuario= "Mensaje de error por que no es posible cancelar una transaccion que no fue iniciada";
             throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario);
+        }else{
+            try {
+                conexion.rollback();
+            } catch (SQLException exception) {
+                var mensajeUsuario = CatalogoMensajes.UtilSql.USUARIO_ERROR_PROBLEMA_CANCELANDO_TRANSACCION_SQL;
+                throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario, exception.getMessage(), exception);
+            }
+            catch (Exception exception) {
+                var mensajeUsuario = CatalogoMensajes.UtilSql.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CANCELANDO_TRANSACCION_SQL;
+                throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario, exception.getMessage(), exception);
+            }
         }
-        //aqui es la tarea de como cancelarlar la transaccion
     }
+
     public static void cerrarConexion(Connection conexion){
         //si la conexion no esta abierta ,no se puede cerrar
         if(!conexionEstaAbierta(conexion)){
             var mensajeUsuario= "Mensaje de error por que no es posible cerrar una conexion que no esta abierta";
             throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario);
         }
-        //aqui es la tarea de como cerrar la conexion
         // Primero verificamos que exista una conexión
-        if (conexion != null) {
-
-            try {
-                // Cerramos la conexión
-                conexion.close();
-
-            } catch (SQLException e) {
+        try {
+            // Cerramos la conexión
+            conexion.close();
+        } catch (SQLException exception) {
                 // Si ocurre un error al cerrarla
-                throw new IllegalArgumentException("No se pudo cerrar la conexión", e);
+            var mensajeUsuario = CatalogoMensajes.UtilSql.USUARIO_ERROR_PROBLEMA_CERRANDO_CONEXION_SQL;
+            throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario, exception.getMessage(), exception);
             }
+        catch (Exception exception) {
+            // Si ocurre un error al cerrarla
+            var mensajeUsuario = CatalogoMensajes.UtilSql.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CERRANDO_CONEXION_SQL;
+            throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario, exception.getMessage(), exception);
         }
     }
 

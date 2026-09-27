@@ -1,8 +1,8 @@
 package co.edu.uco.libreriauco.libreriauco.dao.factoria;
 
-import co.edu.uco.libreriauco.libreriauco.dao.entidad.CiudadDao;
-import co.edu.uco.libreriauco.libreriauco.dao.entidad.DepartamentoDao;
-import co.edu.uco.libreriauco.libreriauco.dao.entidad.PaisDAO;
+import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.CiudadDao;
+import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.DepartamentoDao;
+import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.PaisDAO;
 import co.edu.uco.libreriauco.libreriauco.transversal.Utilitario.UtilSql;
 
 import java.sql.Connection;
@@ -47,47 +47,15 @@ public abstract class DaoFactory {
         UtilSql.cerrarConexion(conexion);
     }
 
-
     public void iniciarTransaccion() {
-
-        try {
-         // Desactivamos el guardado automático para controlar
-         // cuándo se confirman o se deshacen los cambios
-          conexion.setAutoCommit(false);
-
-        } catch (SQLException e) {
-        // Si no podemos desactivar el guardado automático,
-        // no podemos iniciar correctamente la transacción
-        throw new IllegalArgumentException("No se pudo iniciar la transacción", e);
-       }
+      UtilSql.iniciarTransaccion(conexion);
      }
+
      public void confirmarTransaccion() {
-
-    try {
-        // Confirmamos todos los cambios realizados
-        // durante la transacción
-        conexion.commit();
-
-    } catch (SQLException e) {
-        // Si no podemos confirmar los cambios,
-        // la transacción no se pudo confirmar
-        throw new IllegalArgumentException(
-                "No se pudo confirmar la transacción", e);
-     }
+      UtilSql.confirmarTransaccion(conexion);
      }
 public void cancelarTransaccion() {
-
-    try {
-        // Deshacemos todos los cambios realizados
-        // durante la transacción
-        conexion.rollback();
-
-    } catch (SQLException e) {
-        // Si no podemos deshacer los cambios,
-        // la transacción no se pudo cancelar
-        throw new IllegalArgumentException(
-                "No se pudo cancelar la transacción", e);
-    }
+      UtilSql.cancelarTransaccion(conexion);
 }
     // va a fabricar los daos para las entidades
     public abstract PaisDAO obtenerPaisDAO();

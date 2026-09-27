@@ -1,6 +1,6 @@
-package co.edu.uco.libreriauco.libreriauco.dao.entidad;
+package co.edu.uco.libreriauco.libreriauco.dao.datos.entidad;
 
-import co.edu.uco.libreriauco.libreriauco.dao.ConsultarDao;
+import co.edu.uco.libreriauco.libreriauco.dao.datos.ConsultarDao;
 import co.edu.uco.libreriauco.libreriauco.entidad.DepartamentoEntidad;
 
 import java.util.UUID;
