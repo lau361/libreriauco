@@ -3,6 +3,7 @@ package co.edu.uco.libreriauco.libreriauco.dao.factoria;
 import co.edu.uco.libreriauco.libreriauco.dao.entidad.CiudadDao;
 import co.edu.uco.libreriauco.libreriauco.dao.entidad.DepartamentoDao;
 import co.edu.uco.libreriauco.libreriauco.dao.entidad.PaisDAO;
+import co.edu.uco.libreriauco.libreriauco.transversal.Utilitario.UtilSql;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -43,19 +44,7 @@ public abstract class DaoFactory {
     protected abstract void abrirConexion();
 
     public void cerrarConexion() {
-
-        // Primero verificamos que exista una conexión
-        if (conexion != null) {
-
-            try {
-                // Cerramos la conexión
-                conexion.close();
-
-            } catch (SQLException e) {
-                // Si ocurre un error al cerrarla
-                throw new IllegalArgumentException("No se pudo cerrar la conexión", e);
-            }
-        }
+        UtilSql.cerrarConexion(conexion);
     }
 
 
