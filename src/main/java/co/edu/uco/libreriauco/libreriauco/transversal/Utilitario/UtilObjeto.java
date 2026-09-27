@@ -1,4 +1,4 @@
-package co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario;
+package co.edu.uco.libreriauco.libreriauco.transversal.Utilitario;
 
 public class UtilObjeto {
     //solo la misma clase puede crear objetos de este tipo

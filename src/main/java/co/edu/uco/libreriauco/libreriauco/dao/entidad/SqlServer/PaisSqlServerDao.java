@@ -1,13 +1,12 @@
 package co.edu.uco.libreriauco.libreriauco.dao.entidad.SqlServer;
 
 import co.edu.uco.libreriauco.libreriauco.dao.entidad.PaisDAO;
-import co.edu.uco.libreriauco.libreriauco.dao.entidad.SQLDao;
 import co.edu.uco.libreriauco.libreriauco.entidad.PaisEntidad;
 
 import java.util.List;
 import java.util.UUID;
 
-public class PaisSqlServerDao extends SQLDao implements PaisDAO {
+public class PaisSqlServerDao  implements PaisDAO {
 
 
     @Override
@@ -15,21 +14,23 @@ public class PaisSqlServerDao extends SQLDao implements PaisDAO {
 
     }
 
+    //bn
     @Override
     public PaisEntidad consultarPorId(UUID uuid) {
         return null;
     }
-
+    //bn
     @Override
     public List<PaisEntidad> consultarPorFiltro(PaisEntidad filtro) {
         return null;
     }
 
+    //bn
     @Override
     public List<PaisEntidad> consultarTodos() {
         return null;
     }
-
+   //bn
     @Override
     public void crear(PaisEntidad entidad) {
 

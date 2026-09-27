@@ -1,9 +1,9 @@
 package co.edu.uco.libreriauco.libreriauco.entidad;
 
-import co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario.UtilId;
+import co.edu.uco.libreriauco.libreriauco.transversal.Utilitario.UtilId;
 
-import co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario.UtilTexto;
-import co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario.UtilObjeto;
+import co.edu.uco.libreriauco.libreriauco.transversal.Utilitario.UtilTexto;
+import co.edu.uco.libreriauco.libreriauco.transversal.Utilitario.UtilObjeto;
 
 import java.util.UUID;
 

@@ -1,5 +1,6 @@
 package co.edu.uco.libreriauco.libreriauco.dao.factoria;
 
+import co.edu.uco.libreriauco.libreriauco.dao.entidad.CiudadDao;
 import co.edu.uco.libreriauco.libreriauco.dao.entidad.DepartamentoDao;
 import co.edu.uco.libreriauco.libreriauco.dao.entidad.PaisDAO;
 
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 public abstract class DaoFactory {
     private Connection conexion;
 
-    protected DaoFactory(Connection conexion) {
+    protected DaoFactory() {
         abrirConexion();
     }
 
@@ -102,5 +103,6 @@ public void cancelarTransaccion() {
     // va a fabricar los daos para las entidades
     public abstract PaisDAO obtenerPaisDAO();
     public abstract DepartamentoDao obtenerDepartamentoDAO();
+    public abstract CiudadDao obtenerCiudadDAO();
 
 }

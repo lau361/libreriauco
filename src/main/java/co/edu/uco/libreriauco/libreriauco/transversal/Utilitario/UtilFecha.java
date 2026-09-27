@@ -1,4 +1,4 @@
-package co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario;
+package co.edu.uco.libreriauco.libreriauco.transversal.Utilitario;
 
 import java.time.LocalDate;
 

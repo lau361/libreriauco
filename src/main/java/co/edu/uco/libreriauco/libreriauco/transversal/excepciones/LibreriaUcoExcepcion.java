@@ -1,10 +1,11 @@
-package co.edu.uco.libreriauco.libreriauco.crosscuting.excepciones;
+package co.edu.uco.libreriauco.libreriauco.transversal.excepciones;
 
-import co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario.UtilObjeto;
-import co.edu.uco.libreriauco.libreriauco.crosscuting.Utilitario.UtilTexto;
-import co.edu.uco.libreriauco.libreriauco.crosscuting.excepciones.enums.Capa;
+import co.edu.uco.libreriauco.libreriauco.transversal.Utilitario.UtilObjeto;
+import co.edu.uco.libreriauco.libreriauco.transversal.Utilitario.UtilTexto;
+import co.edu.uco.libreriauco.libreriauco.transversal.excepciones.enums.Capa;
 
 public class LibreriaUcoExcepcion extends RuntimeException{
+
     private static final long serialVersionUID = -3074234567890123456L;
     private Capa capa;
     private String mensajeUsuario;
@@ -24,6 +25,11 @@ public class LibreriaUcoExcepcion extends RuntimeException{
         setExcepcionRaiz(excepcionRaiz);
 
     }
+
+    public static long getSerialVersionuid(){
+        return serialVersionUID;
+    }
+
 
     public Capa getCapa() {
         return capa;
