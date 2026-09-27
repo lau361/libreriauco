@@ -31,7 +31,7 @@ public class UtilSql {
     public static void asegurarConexionAbierta(Connection conexion){
         //si la conexion no esta abierta , voy a reportar un problema
         if(!conexionEstaAbierta(conexion)){
-            var mensajeUsuario= "Mensaje de error por que no es posible continuar con la operacion deseada debido a que la conexion contra la fuente de informacion no esta abierta . Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+            var mensajeUsuario = CatalogoMensajes.UtilSql.USUARIO_ERROR_CONEXION_SQL_NO_ESTA_ABIERTA;
             throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario);
         }
     }
@@ -68,7 +68,7 @@ public class UtilSql {
     public static void confirmarTransaccion(Connection conexion){
         //si la transaccion no esta iniciada error
         if(!transaccionEstaIniciada(conexion)){
-            var mensajeUsuario= "Mensaje de error por que no es posible confirmar una transaccion que no fue iniciada";
+            var mensajeUsuario = CatalogoMensajes.UtilSql.USUARIO_ERROR_NO_ES_POSIBLE_CONFIRMAR_TRANSACCION_SQL;
             throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario);
         }else{
             try {
@@ -86,7 +86,7 @@ public class UtilSql {
     public static void cancelarTransaccion(Connection conexion){
         //si la transaccion no esta iniciada error ya que no se puede cancelar algo que no se inicio
         if(!transaccionEstaIniciada(conexion)){
-            var mensajeUsuario= "Mensaje de error por que no es posible cancelar una transaccion que no fue iniciada";
+            var mensajeUsuario = CatalogoMensajes.UtilSql.USUARIO_ERROR_NO_ES_POSIBLE_CANCELAR_TRANSACCION_SQL;
             throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario);
         }else{
             try {
@@ -105,6 +105,8 @@ public class UtilSql {
     public static void cerrarConexion(Connection conexion){
         //si la conexion no esta abierta ,no se puede cerrar
         if(!conexionEstaAbierta(conexion)){
+            var mensajeUsuario = CatalogoMensajes.UtilSql.USUARIO_ERROR_NO_ES_POSIBLE_CERRAR_CONEXION_SQL;
+
             var mensajeUsuario= "Mensaje de error por que no es posible cerrar una conexion que no esta abierta";
             throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario);
         }

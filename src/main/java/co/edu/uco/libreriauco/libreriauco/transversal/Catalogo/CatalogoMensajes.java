@@ -19,6 +19,13 @@ public class CatalogoMensajes {
        public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONFIRMANDO_TRANSACCION_SQL = "Se ha presentado un problema NO CONTROLADO  tratando de confirmar  la transaccion contra la fuente de informacion . Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
        public static final String USUARIO_ERROR_PROBLEMA_CANCELANDO_TRANSACCION_SQL = "Se ha presentado un problema  tratando de cancelar  la transaccion contra la fuente de informacion . Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
        public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CANCELANDO_TRANSACCION_SQL = "Se ha presentado un problema NO CONTROLADO  tratando de cancelar  la transaccion contra la fuente de informacion . Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+       public static final String USUARIO_ERROR_CONEXION_SQL_NO_ESTA_ABIERTA= "No es posible continuar con la operacion deseada debido a que la conexion contra la fuente de informacion esta vacia o se encuentra cerrada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+       public static final String USUARIO_ERROR_NO_ES_POSIBLE_CONFIRMAR_TRANSACCION_SQL ="No es posible confirmar los cambios de la operacion deseada debido a que la conexion contra la fuente de informacion esta vacia , esta cerrada , o por que la transaccion no fue iniciada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+       public static final String USUARIO_ERROR_NO_ES_POSIBLE_CANCELAR_TRANSACCION_SQL ="No es posible deshacer los cambios de la operacion deseada debido a que la conexion contra la fuente de informacion esta vacia , esta cerrada , o por que la transaccion no fue iniciada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+       public static final String USUARIO_ERROR_NO_ES_POSIBLE_CERRAR_CONEXION_SQL = "No es posible cerrar la conexion contra la fuente de informacion debido a que esta vacia o ya se encuentra cerrada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+
+
+
 
 
 
