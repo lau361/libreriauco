@@ -9,4 +9,17 @@ public class LibreriaUcoEntidadExcepcion extends LibreriaUcoExcepcion {
     private LibreriaUcoEntidadExcepcion(String mensajeUsuario, String mensajeTecnico, Exception excepcionRaiz){
         super(Capa.ENTIDAD, mensajeUsuario, mensajeTecnico, excepcionRaiz);
     }
+    public static LibreriaUcoExcepcion crear(String mensajeUsuario){
+        return new LibreriaUcoEntidadExcepcion(mensajeUsuario,mensajeUsuario,
+                new Exception(mensajeUsuario));
+    }
+    public static LibreriaUcoExcepcion crear(String mensajeUsuario, String mensajeTecnico){
+        return new LibreriaUcoEntidadExcepcion(mensajeUsuario,mensajeTecnico,
+                new Exception(mensajeTecnico));
+    }
+    public static LibreriaUcoExcepcion crear(String mensajeUsuario, String mensajeTecnico, Exception excepcionRaiz){
+        return new LibreriaUcoEntidadExcepcion(mensajeUsuario,mensajeTecnico,
+                excepcionRaiz);
+    }
+
 }
