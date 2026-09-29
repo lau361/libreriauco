@@ -1,0 +1,30 @@
+<configuration>
+
+    <!-- 1. EL FORMATO: cómo se ve cada línea -->
+    <property name="PATRON" value="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"/>
+
+    <!-- 2. SALIDA A LA CONSOLA -->
+    <appender name="CONSOLA" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${PATRON}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 3. SALIDA A UN ARCHIVO -->
+    <appender name="ARCHIVO" class="ch.qos.logback.core.FileAppender">
+        <file>logs/libreriauco.log</file>
+        <encoder>
+            <pattern>${PATRON}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 4. NIVEL PARA NUESTRO CÓDIGO -->
+    <logger name="co.edu.uco.libreriauco" level="DEBUG"/>
+
+    <!-- 5. NIVEL PARA TODO LO DEMÁS, Y A DÓNDE VA -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLA"/>
+        <appender-ref ref="ARCHIVO"/>
+    </root>
+
+</configuration>
