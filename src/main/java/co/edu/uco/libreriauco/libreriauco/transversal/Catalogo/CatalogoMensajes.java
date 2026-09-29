@@ -24,12 +24,22 @@ public class CatalogoMensajes {
        public static final String USUARIO_ERROR_NO_ES_POSIBLE_CANCELAR_TRANSACCION_SQL ="No es posible deshacer los cambios de la operacion deseada debido a que la conexion contra la fuente de informacion esta vacia , esta cerrada , o por que la transaccion no fue iniciada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
        public static final String USUARIO_ERROR_NO_ES_POSIBLE_CERRAR_CONEXION_SQL = "No es posible cerrar la conexion contra la fuente de informacion debido a que esta vacia o ya se encuentra cerrada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
 
-
-
-
-
-
-
+   }
+   public static  class PaisSqlServerDao{
+        private PaisSqlServerDao (){
+        }
+       public static final String USUARIO_ERROR_PROBLEMA_CREANDO_PAIS = "Se ha presentado un problema tratando de registrar la informacion del nuevo pais. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+       public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_PAIS = "Se ha presentado un problema NO CONTROLADO tratando de registrar la informacion del nuevo pais. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+       public static final String USUARIO_ERROR_PROBLEMA_ACTUALIZANDO_PAIS = "Se ha presentado un problema tratando de actualizar la informacion del pais deseado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+       public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_PAIS = "Se ha presentado un problema NO CONTROLADO tratando de actualizar la informacion del pais deseado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+       public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAIS_POR_ID= "Se ha presentado un problema tratando de consultar la informacion del pais deseado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+       public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAIS_POR_ID = "Se ha presentado un problema NO CONTROLADO tratando de consultar la informacion del pais deseado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+       public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAIS_POR_FILTRO = "Se ha presentado un problema tratando de consultar la informacion  deseada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+       public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAIS_POR_FILTRO = "Se ha presentado un problema NO CONTROLADO tratando de consultar la informacion deseada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+       public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_TODOS_LOS_PAISES = "Se ha presentado un problema tratando de consultar la informacion de todos los paises. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+       public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_TODOS_LOS_PAISES = "Se ha presentado un problema NO CONTROLADO tratando de consultar la informacion de todos los paises. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+       public static final String USUARIO_ERROR_PROBLEMA_ELIMINANDO_PAIS = "Se ha presentado un problema tratando de eliminar la informacion del pais deseado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+       public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ELIMINANDO_PAIS = "Se ha presentado un problema NO CONTROLADO tratando de eliminar la informacion del pais deseado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
    }
 
 }

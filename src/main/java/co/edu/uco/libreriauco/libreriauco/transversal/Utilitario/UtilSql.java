@@ -106,8 +106,6 @@ public class UtilSql {
         //si la conexion no esta abierta ,no se puede cerrar
         if(!conexionEstaAbierta(conexion)){
             var mensajeUsuario = CatalogoMensajes.UtilSql.USUARIO_ERROR_NO_ES_POSIBLE_CERRAR_CONEXION_SQL;
-
-            var mensajeUsuario= "Mensaje de error por que no es posible cerrar una conexion que no esta abierta";
             throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario);
         }
         // Primero verificamos que exista una conexión
