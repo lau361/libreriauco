@@ -4,6 +4,8 @@ import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.PaisDAO;
 import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.SqlDAO;
 import co.edu.uco.libreriauco.libreriauco.entidad.PaisEntidad;
 import co.edu.uco.libreriauco.libreriauco.transversal.Catalogo.CatalogoMensajes;
+import co.edu.uco.libreriauco.libreriauco.transversal.Utilitario.UtilId;
+import co.edu.uco.libreriauco.libreriauco.transversal.Utilitario.UtilTexto;
 import co.edu.uco.libreriauco.libreriauco.transversal.excepciones.LibreriaUcoDatosExcepcion;
 
 import java.sql.Connection;
@@ -81,14 +83,28 @@ public class PaisSqlServerDao extends SqlDAO implements PaisDAO {
     //bn
     @Override
     public List<PaisEntidad> consultarPorFiltro(PaisEntidad filtro) {
-        var sentenciaSql="select id,nombre from pais where nombre=?";
         var paisesEncontrados = new ArrayList<PaisEntidad>();
+        var sentenciaSql = "select id, nombre from pais where 1=1";
+        var parametros = new ArrayList<Object>();
+        if (!UtilId.VALOR_DEFECTO.equals(filtro.getId())) {
+            sentenciaSql = sentenciaSql + " and id = ?";
+            parametros.add(filtro.getId());
+        }
+        if (!UtilTexto.getUtilTexto().esVacia(filtro.getNombre())) {
+            sentenciaSql = sentenciaSql + " and nombre = ?";
+            parametros.add(filtro.getNombre());
+        }
+        // el orden va siempre al final
+        sentenciaSql = sentenciaSql + " order by nombre asc";
 
         try (var sentencia = getConexion().prepareStatement(sentenciaSql)) {
-            //es lo que me van a ingresar
-            sentencia.setString(1, filtro.getNombre());
+
+            for (var indice = 0; indice < parametros.size(); indice++) {
+                sentencia.setObject(indice + 1, parametros.get(indice));
+            }
 
             var resultado = sentencia.executeQuery();
+            // por cada fila que llegó, se arma un país y se agrega a la lista
             while (resultado.next()) {
                 var pais = new PaisEntidad.Builder()
                         .id(UUID.fromString(resultado.getString("id")))
@@ -96,6 +112,7 @@ public class PaisSqlServerDao extends SqlDAO implements PaisDAO {
                         .build();
                 paisesEncontrados.add(pais);
             }
+
         } catch (SQLException excepcion) {
             //el controlado
             var mensajeUsuario = CatalogoMensajes.PaisSqlServerDao.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAIS_POR_FILTRO;
@@ -108,11 +125,10 @@ public class PaisSqlServerDao extends SqlDAO implements PaisDAO {
         return paisesEncontrados;
     }
 
-
 //bn
      @Override
       public List<PaisEntidad> consultarTodos() {
-         var sentenciaSql="select id,nombre from pais";
+         var sentenciaSql="select id,nombre from pais order by nombre asc";
          var paisesEncontrados = new ArrayList<PaisEntidad>();
 
          try (var sentencia = getConexion().prepareStatement(sentenciaSql)) {
@@ -164,6 +180,7 @@ public class PaisSqlServerDao extends SqlDAO implements PaisDAO {
     @Override
      public void eliminar(UUID uuid) {
         var sentenciaSql = "delete from pais where id =?";
+        // Autocloseable
         try(var sentencia= getConexion().prepareStatement(sentenciaSql)){
             sentencia.setObject(1, uuid);
             sentencia.executeUpdate();
