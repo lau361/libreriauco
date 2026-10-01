@@ -33,6 +33,9 @@ public class DepartamentoEntidad {
         public String getNombre() {
             return nombre;
         }
+        public PaisEntidad getPais() {
+        return pais;
+    }
 
         public static class Builder {
             private UUID id;
@@ -68,9 +71,6 @@ public class DepartamentoEntidad {
                 return build();
             }
 
-            public PaisEntidad getPais() {
-                return pais;
-            }
             public void setPais(PaisEntidad pais) {
                 this.pais = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(pais, new PaisEntidad.Builder().build());
             }
