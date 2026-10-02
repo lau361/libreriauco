@@ -2,14 +2,13 @@ package co.edu.uco.libreriauco.libreriauco.negocio.negocio.impl;
 
 import co.edu.uco.libreriauco.libreriauco.dao.factoria.DaoFactory;
 import co.edu.uco.libreriauco.libreriauco.dominio.PaisDominio;
+import co.edu.uco.libreriauco.libreriauco.entidad.PaisEntidad;
 import co.edu.uco.libreriauco.libreriauco.negocio.negocio.PaisNegocio;
-import co.edu.uco.libreriauco.libreriauco.negocio.negocio.asembler.impl.PaisEntidadAssembler;
 
 import java.util.List;
 import java.util.UUID;
 
 public class PaisNegocioImpl implements PaisNegocio {
-
 
     private DaoFactory daoFactory;
 
@@ -21,10 +20,7 @@ public class PaisNegocioImpl implements PaisNegocio {
     public void registrarInformacionNuevoPais(PaisDominio datos) {
         asegurarDatosRegistroNuevoPaisValidos( datos);
         asegurarNombreNuevoPaisNoExiste(datos.getNombre());
-
-        var paisEntidad = PaisEntidadAssembler.getInstance().convertirDominioAEntidad(datos);
-        paisEntidad.setId(generarIdPaisUnico());
-
+        var paisEntidad = ensamblarPaisEntidadACrear();
         daoFactory.obtenerPaisDAO().crear(paisEntidad);
     }
 
