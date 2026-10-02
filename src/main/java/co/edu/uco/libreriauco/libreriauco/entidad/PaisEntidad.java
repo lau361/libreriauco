@@ -9,10 +9,14 @@ public class PaisEntidad {
         private UUID id;
         private String nombre;
 
-        private PaisEntidad(UUID id, String nombre) {
-            super();
-            this.id = id;
-            this.nombre = nombre;
+       public PaisEntidad(){
+           setId(UtilId.valorDefecto());
+           setNombre(UtilTexto.vacia);
+       }
+
+       public PaisEntidad (UUID id, String nombre) {
+            setId(id);
+            setNombre(nombre);
         }
 
         private PaisEntidad(Builder builder) {
