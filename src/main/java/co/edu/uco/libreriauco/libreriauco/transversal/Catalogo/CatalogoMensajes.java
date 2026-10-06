@@ -1,6 +1,7 @@
 package co.edu.uco.libreriauco.libreriauco.transversal.Catalogo;
 
 public class CatalogoMensajes {
+
     private CatalogoMensajes(){}
    public static class UtilSql{
         private UtilSql(){}
@@ -47,4 +48,10 @@ public class CatalogoMensajes {
         public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEPARTAMENTO_POR_FILTRO = "Se ha presentado un problema NO CONTROLADO tratando de consultar la informacion de los departamentos deseados. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
     }
 
+    public static class PaisNegocioImpl {
+
+        private PaisNegocioImpl() {
+        }
+        public static final String PAIS_EXISTE_CON_EL_MISMO_NOMBRE_A_CREAR  = "Ya existe otro pais con el nombre  con el cual se desea crear el pais deseado ";
+    }
 }

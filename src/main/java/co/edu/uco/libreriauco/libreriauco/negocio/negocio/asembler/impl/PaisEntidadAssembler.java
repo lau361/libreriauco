@@ -7,7 +7,7 @@ import co.edu.uco.libreriauco.libreriauco.transversal.Utilitario.UtilObjeto;
 
 public class PaisEntidadAssembler implements EntidadAssembler<PaisDominio, PaisEntidad> {
 
-    private final EntidadAssembler<PaisDominio, PaisEntidad> instancia = new PaisEntidadAssembler();
+    private static final EntidadAssembler<PaisDominio, PaisEntidad> instancia = new PaisEntidadAssembler();
     private PaisEntidadAssembler(){}
 
     public static EntidadAssembler<PaisDominio, PaisEntidad> getInstance() {
@@ -16,18 +16,15 @@ public class PaisEntidadAssembler implements EntidadAssembler<PaisDominio, PaisE
 
     @Override
     public PaisEntidad convertirAEntidad(PaisDominio dominio) {
-        var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,new PaisDominio.Builder().build());
+        var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
+                new PaisDominio.Builder().build());
         return new PaisEntidad(dominioTmp.getId(), dominioTmp.getNombre());
     }
 
     @Override
     public PaisDominio convertirADominio(PaisEntidad entidad) {
-        var entidadTmp= UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new PaisEntidad().Builder().build());
+        var entidadTmp= UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new PaisEntidad());
 
-
-        return new PaisDominio().Builder()
-                .id(entidadTmp.getId())
-                .nombre(entidadTmp.getNombre())
-                .build();
+        return new PaisDominio.Builder().id(entidadTmp.getId()).nombre(entidadTmp.getNombre()).build();
     }
 }

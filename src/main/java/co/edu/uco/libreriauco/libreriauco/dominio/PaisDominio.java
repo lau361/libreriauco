@@ -54,9 +54,3 @@ public class PaisDominio {
     }
 
 }
-//repasar builder
-//vamos a tener un paquete que se va a llamar entidad es aquel que se usa para hacer la relacion correspondencia , mapeo contra
-//cada estrcutura de la base de datos , Investigar Patron Object Relational Mapping
-
-//tarea
-//crear paquete como dto , pero con nombre entiedad , se va a duplicar las clases y los atributos van a ser iguales

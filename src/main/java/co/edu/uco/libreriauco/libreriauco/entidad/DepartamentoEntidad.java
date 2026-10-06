@@ -1,81 +1,50 @@
 package co.edu.uco.libreriauco.libreriauco.entidad;
 
+import co.edu.uco.libreriauco.libreriauco.dto.PaisDTO;
 import co.edu.uco.libreriauco.libreriauco.transversal.Utilitario.UtilId;
 import co.edu.uco.libreriauco.libreriauco.transversal.Utilitario.UtilObjeto;
 import co.edu.uco.libreriauco.libreriauco.transversal.Utilitario.UtilTexto;
 
-
 import java.util.UUID;
 
 public class DepartamentoEntidad {
-        private PaisEntidad pais;
-        private UUID id;
-        private String nombre;
+    private PaisEntidad pais;
+    private UUID id;
+    private String nombre;
 
-        private DepartamentoEntidad(UUID id, String nombre) {
-            super();
-            this.id = id;
-            this.nombre = nombre;
-            this.pais = new PaisEntidad.Builder().Build();
-        }
+    // si creo un departamento sin darle informacion , ennt el departamento se creara de esta manera
+    public DepartamentoEntidad(){
+        setId(UtilId.valorDefecto(id));//tampoco le puso el id
+        setNombre(UtilTexto.vacia);
+        setPais(new PaisEntidad());
+    }
+    public DepartamentoEntidad(UUID id, String nombre, PaisEntidad pais) {
+        setId(UtilId.valorDefecto(id));//tampoco le puso el id
+        setNombre(UtilTexto.getUtilTexto().quitarEspaciosEnBlanco(nombre));
+        setPais(pais);
+    }
+    public UUID getId() {
+        return id;
+    }
 
+    public void setId(UUID id) {
+        this.id = UtilId.valorDefecto(id);
+    }
 
-        private DepartamentoEntidad(Builder builder) {
-            this.id = builder.id;
-            this.nombre = builder.nombre;
-            this.pais = builder.pais;
-        }
+    public String getNombre() {
+        return nombre;
+    }
 
-        public UUID getId() {
-            return id;
-        }
+    public void setNombre(String nombre) {
+        this.nombre = UtilTexto.getUtilTexto().quitarEspaciosEnBlanco(nombre);
+    }
 
-        public String getNombre() {
-            return nombre;
-        }
-        public PaisEntidad getPais() {
+    public PaisEntidad getPais() {
         return pais;
     }
 
-        public static class Builder {
-            private UUID id;
-            private String nombre;
-            private PaisEntidad pais;
-
-            public Builder() {
-                id = UtilId.valorDefecto(id);
-                nombre = UtilTexto.vacia;
-                pais = new PaisEntidad.Builder().build();
-            }
-
-            public Builder id(UUID id) {
-                this.id = UtilId.valorDefecto(id);
-                return this;
-            }
-
-            public Builder nombre(String nombre) {
-                this.nombre = UtilTexto.getUtilTexto().quitarEspaciosEnBlanco(nombre);
-                return this;
-            }
-
-            public Builder pais(PaisEntidad pais) {
-                this.pais = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(pais, new PaisEntidad.Builder().build());
-                return this;
-            }
-
-            public DepartamentoEntidad build() {
-                return new DepartamentoEntidad(this);
-            }
-
-            public DepartamentoEntidad Build() {
-                return build();
-            }
-
-            public void setPais(PaisEntidad pais) {
-                this.pais = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(pais, new PaisEntidad.Builder().build());
-            }
-        }
-
-
+    public void setPais(PaisEntidad pais) {
+        //si el pais es nulo, se le asigna un nuevo PaisEntidad, de lo contrario se le asigna el pais que se le pasa como parametro
+        this.pais = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(pais, new PaisEntidad());
+    }
 }
-

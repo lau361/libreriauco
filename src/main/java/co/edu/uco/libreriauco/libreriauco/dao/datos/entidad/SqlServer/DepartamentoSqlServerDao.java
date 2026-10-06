@@ -66,15 +66,9 @@ public class DepartamentoSqlServerDao extends SqlDAO implements DepartamentoDao{
             while (resultado.next()) {
                 //primero se arma el pais para luego poderlo asignar a departamento
                 //necesito el pais ya listo para poderlo asignar
-                var pais = new PaisEntidad.Builder()
-                        .id(UUID.fromString(resultado.getString("id_pais")))
-                        .nombre(resultado.getString("nombre_pais"))
-                        .build();
-                var departamento = new DepartamentoEntidad.Builder()
-                        .id(UUID.fromString(resultado.getString("id_departamento")))
-                        .nombre(resultado.getString("nombre_departamento"))
-                        .pais(pais)
-                        .build();
+                var pais = new PaisEntidad(UUID.fromString(resultado.getString("id_pais")), resultado.getString("nombre_pais"));
+
+                var departamento = new DepartamentoEntidad(UUID.fromString(resultado.getString("id_departamento")), resultado.getString("nombre_departamento"), pais);
 
                 departamentosEncontrados.add(departamento);
             }
