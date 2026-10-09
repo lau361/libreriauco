@@ -53,5 +53,9 @@ public class CatalogoMensajes {
         private PaisNegocioImpl() {
         }
         public static final String PAIS_EXISTE_CON_EL_MISMO_NOMBRE_A_CREAR  = "Ya existe otro pais con el nombre  con el cual se desea crear el pais deseado ";
+        public static final String LONGITUD_NOMBRE_PAIS_INVALIDA = "La longitud del nombre del pais es invalida. Asegurese que este entre 1 y 50 caracteres.";
+        public static final String NOMBRE_PAIS_OBLIGATORIO = "El nombre del pais es obligatorio. Asegurese que este entre 1 y 50 caracteres.";
+        public static final String FORMATO_NOMBRE_PAIS_NO_VALIDO = "El formato del nombre del pais no es valido. Asegurese de que solo contenga  letras de la A a la Z , mayusculas o minusculas y espacios.";
+
     }
 }

@@ -7,9 +7,10 @@ import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.SqlServer.CiudadSqlS
 import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.SqlServer.DepartamentoSqlServerDao;
 import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.SqlServer.PaisSqlServerDao;
 import co.edu.uco.libreriauco.libreriauco.dao.factoria.DaoFactory;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class SqlServerDAOFactory extends DaoFactory {
@@ -18,11 +19,22 @@ public class SqlServerDAOFactory extends DaoFactory {
     private static final String USUARIO = "javaUser";
     private static final String CLAVE = "1040874176";
 
+    private static final HikariDataSource POOL = crearPool();
+    private static HikariDataSource crearPool() {
+        HikariConfig configuracion = new HikariConfig();
+        configuracion.setJdbcUrl(URL);
+        configuracion.setUsername(USUARIO);
+        configuracion.setPassword(CLAVE);
+        configuracion.setMaximumPoolSize(10);
+        configuracion.setInitializationFailTimeout(-1);
+        return new HikariDataSource(configuracion);
+    }
+
     @Override
     protected void abrirConexion() {
          //como abrir la conexion con sql server desde java
         try {
-            Connection conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
+            Connection conexion = POOL.getConnection();
             setConexion(conexion);
         } catch (SQLException e) {
             throw new IllegalArgumentException("No se pudo conectar a SQL Server", e);

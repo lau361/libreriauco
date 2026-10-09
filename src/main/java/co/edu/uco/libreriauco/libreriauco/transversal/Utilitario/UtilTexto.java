@@ -1,30 +1,15 @@
 package co.edu.uco.libreriauco.libreriauco.transversal.Utilitario;
 
 public class UtilTexto {
-    //The objective of this class is proporcionar operacioes comunes para trabajar con String
-    //Una clase de utilidad busca centralizar operaciones que se repiten y darles un comportamiento Consistente
-
-    //Solamente la propia clase puede puede acceder directamente a ese variable
-    //va a guardar un objeto de utiltexto
-    //Static lo que hace es que cada objeto pueda compartir ese valor pero ese valor va a ser el mismo en toda mi clase
     private static UtilTexto instancia;
-
-    //puedo acceder a esta variable desde otras clases , hay un solo valor por vacio (por eso el static)
-    //y es de tipo string
     public static String vacia = "";
-
-    //Solo la propia clase puede llamar este constructor , es el que dice creemos un objeto de tipo UtilTexto
+    public static final String SOLO_LETRAS_Y_ESPACIOS = "^[a-zA-Z ÑñáÁéÉíÍóÓúÚ]*$";
     private UtilTexto() {
     }
 
-    //estamos declarando un metodo , el cual es una accion que el objeto va a poder hacer
-    //Static para poder llamar directamente este metodo desde afuera sin necesidad de nates a ver creado
-    // un objeto
 
     public static UtilTexto getUtilTexto() {
-        //Solo un objeto a la vez puede entrar a crear la variable isntancia
-        //Por eso el synchronized para asegurar con exito la creacion de instancia
-        //que debe ser la misma para cada objeto
+
             synchronized (UtilTexto.class) {
                 //pregunta si instancia es nula ent se crea si no , la retorn
                 if (UtilObjeto.esNulo(instancia)) {
@@ -33,6 +18,7 @@ public class UtilTexto {
             }
             return instancia;
     }
+
 
 
     public boolean esNula(String texto) {
@@ -50,6 +36,12 @@ public class UtilTexto {
     public static String obtenerValorDefecto(String valor, String valorDefecto) {
         return UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(valor, valorDefecto);
     }
+
+    public boolean formatoEsValido(String valor, String patron){
+       return obtenerValorDefecto(valor).matches(obtenerValorDefecto(patron));
+    }
+
+
     //cuando no me ingresan el valor por defecto , ent el valor defecto va a ser vacia
     public  String obtenerValorDefecto(String valor){
         return obtenerValorDefecto(valor,vacia);
