@@ -12,11 +12,7 @@ public class LibreriaUcoExcepcion extends RuntimeException{
     private String mensajeTecnico;
     private Exception excepcionRaiz;
 
-    /**
-     * Constructs a new runtime exception with {@code null} as its
-     * detail message.  The cause is not initialized, and may subsequently be
-     * initialized by a call to {@link #initCause}.
-     */
+
     protected LibreriaUcoExcepcion(Capa capa, String mensajeUsuario, String mensajeTecnico, Exception excepcionRaiz) {
         super();
         setCapa(capa);

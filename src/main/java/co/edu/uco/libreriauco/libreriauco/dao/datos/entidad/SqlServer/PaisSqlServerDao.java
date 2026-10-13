@@ -48,7 +48,7 @@ public class PaisSqlServerDao extends SqlDAO implements PaisDAO {
     public PaisEntidad consultarPorId(UUID uuid) {
         var sentenciaSql="select id, nombre from pais where id=?";
         //si el pais no tiene nada para evitar nulo , utilizamos lo de los utilitarios , pero con builder
-        var PaisEncontrado= new PaisEntidad();
+        var PaisEncontrado= new PaisEntidad.Builder().build();
         //aqui es donde se inicio la consulta del pais ent es donde voy a poner el logger con la info
         Logger_.info("Se inicio la consulta del pais con id {}", uuid);
         try(var sentencia= getConexion().prepareStatement(sentenciaSql)){
@@ -58,7 +58,7 @@ public class PaisSqlServerDao extends SqlDAO implements PaisDAO {
             var resultado = sentencia.executeQuery();
             if(resultado.next()){
                 //si entra aca es por que se encontro un pais
-                PaisEncontrado = new PaisEntidad (UUID.fromString(resultado.getString("id")), resultado.getString("nombre"));
+                PaisEncontrado = new PaisEntidad.Builder().id(UUID.fromString(resultado.getString("id"))).nombre(resultado.getString("nombre")).build();
 
                 Logger_.info("Pais encontrado : {}", PaisEncontrado.getNombre());
             }else{
@@ -104,7 +104,7 @@ public class PaisSqlServerDao extends SqlDAO implements PaisDAO {
             var resultado = sentencia.executeQuery();
             // por cada fila que llegó, se arma un país y se agrega a la lista
             while (resultado.next()) {
-                var pais = new PaisEntidad(UUID.fromString(resultado.getString("id")), resultado.getString("nombre"));
+                var pais = new PaisEntidad.Builder().id(UUID.fromString(resultado.getString("id"))).nombre(resultado.getString("nombre")).build();
                 paisesEncontrados.add(pais);
             }
 
@@ -130,7 +130,7 @@ public class PaisSqlServerDao extends SqlDAO implements PaisDAO {
 
            var resultado = sentencia.executeQuery();
            while (resultado.next()) {
-              var pais = new PaisEntidad(UUID.fromString(resultado.getString("id")), resultado.getString("nombre"));
+              var pais = new PaisEntidad.Builder().id(UUID.fromString(resultado.getString("id"))).nombre(resultado.getString("nombre")).build();
              paisesEncontrados.add(pais);
               }
          } catch (SQLException excepcion) {

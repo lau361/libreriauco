@@ -2,13 +2,18 @@ package co.edu.uco.libreriauco.libreriauco.negocio.negocio.impl;
 
 import co.edu.uco.libreriauco.libreriauco.dao.factoria.DaoFactory;
 import co.edu.uco.libreriauco.libreriauco.dominio.PaisDominio;
+import co.edu.uco.libreriauco.libreriauco.entidad.PaisEntidad;
 import co.edu.uco.libreriauco.libreriauco.negocio.negocio.PaisNegocio;
 import co.edu.uco.libreriauco.libreriauco.negocio.negocio.asembler.impl.PaisEntidadAssembler;
-import co.edu.uco.libreriauco.libreriauco.negocio.negocio.especificacion.IdPaisExisteEspecificacion;
+import co.edu.uco.libreriauco.libreriauco.negocio.negocio.reglas.impl.pais.AsegurarIdPaisNoExisteRule;
 import co.edu.uco.libreriauco.libreriauco.negocio.negocio.reglas.impl.pais.AsegurarNombreNuevoPaisNoExisteRule;
+import co.edu.uco.libreriauco.libreriauco.negocio.negocio.reglas.impl.pais.AsegurarNombrePaisModificadoNoExisteRule;
+import co.edu.uco.libreriauco.libreriauco.negocio.negocio.reglas.impl.pais.AsegurarNombrePaisValidoRule;
+import co.edu.uco.libreriauco.libreriauco.negocio.negocio.reglas.impl.pais.AsegurarPaisExisteRule;
 import co.edu.uco.libreriauco.libreriauco.negocio.negocio.reglas.impl.pais.ValidarDatosRegistrarInformacionNuevoPaisRule;
 import co.edu.uco.libreriauco.libreriauco.transversal.Utilitario.UtilId;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +21,7 @@ public class PaisNegocioImpl implements PaisNegocio {
 
     private DaoFactory daoFactory;
 
-    protected PaisNegocioImpl(DaoFactory daoFactory){
+    public PaisNegocioImpl(DaoFactory daoFactory){
         this.daoFactory = daoFactory;
     }
 
@@ -24,46 +29,60 @@ public class PaisNegocioImpl implements PaisNegocio {
     public void registrarInformacionNuevoPais(PaisDominio datos) {
         ValidarDatosRegistrarInformacionNuevoPaisRule.obtenerInstancia().ejecutar(datos);
         AsegurarNombreNuevoPaisNoExisteRule.obtenerInstancia().ejecutar(datos.getNombre(), daoFactory);
-        var paisEntidad = PaisEntidadAssembler.getInstance().convertirAEntidad(datos);
-        paisEntidad.setId(generarIdPaisUnico());
+        var idPais = generarIdPaisUnico();
+        AsegurarIdPaisNoExisteRule.obtenerInstancia().ejecutar(idPais, daoFactory);
+
+        var paisConId = new PaisDominio.Builder()
+                .id(idPais)
+                .nombre(datos.getNombre())
+                .build();
+        var paisEntidad = PaisEntidadAssembler.getInstance().convertirAEntidad(paisConId);
         daoFactory.obtenerPaisDAO().crear(paisEntidad);
     }
 
     private UUID generarIdPaisUnico() {
-        //genero un id al azar
-        var id = UtilId.generarId();
-
-        //mientras ese id ya exista, genero otro
-        while (new IdPaisExisteEspecificacion(daoFactory).seCumple(id)) {
-            id = UtilId.generarId();
-        }
-
-        //si llego aqui, el id esta libre
-        return id;
+        return UtilId.generarId();
     }
 
     @Override
     public void modificarInformacionPaisExistente(UUID id, PaisDominio paisDominio) {
-
+        AsegurarPaisExisteRule.obtenerInstancia().ejecutar(id, daoFactory);
+        AsegurarNombrePaisValidoRule.obtenerInstancia().ejecutar(paisDominio.getNombre());
+        AsegurarNombrePaisModificadoNoExisteRule.obtenerInstancia().ejecutar(id, paisDominio.getNombre(), daoFactory);
+        var paisEntidad = new PaisEntidad.Builder().id(id).nombre(paisDominio.getNombre()).build();
+        daoFactory.obtenerPaisDAO().actualizar(id, paisEntidad);
     }
 
     @Override
     public void darBajaInformacionPaisExistente(UUID id) {
-
+        AsegurarPaisExisteRule.obtenerInstancia().ejecutar(id, daoFactory);
+        daoFactory.obtenerPaisDAO().eliminar(id);
     }
 
     @Override
     public List<PaisDominio> consultarPorFiltro(PaisDominio filtro) {
-        return List.of();
+        var filtroEntidad = PaisEntidadAssembler.getInstance().convertirAEntidad(filtro);
+        var paisesEncontrados = daoFactory.obtenerPaisDAO().consultarPorFiltro(filtroEntidad);
+        var paisesDominio = new ArrayList<PaisDominio>();
+        for (var paisEntidad : paisesEncontrados) {
+            paisesDominio.add(PaisEntidadAssembler.getInstance().convertirADominio(paisEntidad));
+        }
+        return paisesDominio;
     }
 
     @Override
     public List<PaisDominio> consultarTodos() {
-        return List.of();
+        var paisesEncontrados = daoFactory.obtenerPaisDAO().consultarTodos();
+        var paisesDominio = new ArrayList<PaisDominio>();
+        for (var paisEntidad : paisesEncontrados) {
+            paisesDominio.add(PaisEntidadAssembler.getInstance().convertirADominio(paisEntidad));
+        }
+        return paisesDominio;
     }
 
     @Override
     public PaisDominio consultarPorId(UUID id) {
-        return null;
+        var paisEncontrado = daoFactory.obtenerPaisDAO().consultarPorId(id);
+        return PaisEntidadAssembler.getInstance().convertirADominio(paisEncontrado);
     }
 }

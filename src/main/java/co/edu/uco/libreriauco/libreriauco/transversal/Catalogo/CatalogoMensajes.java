@@ -46,6 +46,22 @@ public class CatalogoMensajes {
    public static class DepartamentoSqlServerDao{
         public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_DEPARTAMENTO_POR_FILTRO = "Se ha presentado un problema tratando de consultar la informacion de los departamentos deseados. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
         public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEPARTAMENTO_POR_FILTRO = "Se ha presentado un problema NO CONTROLADO tratando de consultar la informacion de los departamentos deseados. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+        public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_DEPARTAMENTO_POR_ID = "Se ha presentado un problema tratando de consultar la informacion del departamento deseado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+        public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEPARTAMENTO_POR_ID = "Se ha presentado un problema NO CONTROLADO tratando de consultar la informacion del departamento deseado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+        public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_TODOS_LOS_DEPARTAMENTOS = "Se ha presentado un problema tratando de consultar la informacion de todos los departamentos. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+        public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_TODOS_LOS_DEPARTAMENTOS = "Se ha presentado un problema NO CONTROLADO tratando de consultar la informacion de todos los departamentos. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+    }
+
+    public static class CiudadSqlServerDao {
+
+        private CiudadSqlServerDao() {
+        }
+        public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_CIUDAD_POR_ID = "Se ha presentado un problema tratando de consultar la informacion de la ciudad deseada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+        public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CIUDAD_POR_ID = "Se ha presentado un problema NO CONTROLADO tratando de consultar la informacion de la ciudad deseada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+        public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_CIUDAD_POR_FILTRO = "Se ha presentado un problema tratando de consultar la informacion de las ciudades deseadas. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+        public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CIUDAD_POR_FILTRO = "Se ha presentado un problema NO CONTROLADO tratando de consultar la informacion de las ciudades deseadas. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+        public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_TODAS_LAS_CIUDADES = "Se ha presentado un problema tratando de consultar la informacion de todas las ciudades. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+        public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_TODAS_LAS_CIUDADES = "Se ha presentado un problema NO CONTROLADO tratando de consultar la informacion de todas las ciudades. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
     }
 
     public static class PaisNegocioImpl {
@@ -56,6 +72,22 @@ public class CatalogoMensajes {
         public static final String LONGITUD_NOMBRE_PAIS_INVALIDA = "La longitud del nombre del pais es invalida. Asegurese que este entre 1 y 50 caracteres.";
         public static final String NOMBRE_PAIS_OBLIGATORIO = "El nombre del pais es obligatorio. Asegurese que este entre 1 y 50 caracteres.";
         public static final String FORMATO_NOMBRE_PAIS_NO_VALIDO = "El formato del nombre del pais no es valido. Asegurese de que solo contenga  letras de la A a la Z , mayusculas o minusculas y espacios.";
+        public static final String PAIS_NO_EXISTE = "El pais indicado no existe. Verifique la informacion e intente de nuevo.";
+        public static final String PAIS_EXISTE_CON_EL_MISMO_NOMBRE_A_MODIFICAR = "Ya existe otro pais con el nombre que se desea asignar al pais que se esta modificando";
+        public static final String ID_PAIS_YA_EXISTE = "No es posible registrar el pais porque el identificador generado ya esta en uso. Por favor intente de nuevo y si el problema persiste contacte al administrador";
+
+    }
+
+    public static class PaisFachadaImpl {
+
+        private PaisFachadaImpl() {
+        }
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_REGISTRANDO_PAIS = "Se ha presentado un problema inesperado tratando de registrar la informacion del nuevo pais. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_MODIFICANDO_PAIS = "Se ha presentado un problema inesperado tratando de modificar la informacion del pais deseado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_DANDO_BAJA_PAIS = "Se ha presentado un problema inesperado tratando de dar de baja la informacion del pais deseado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_CONSULTANDO_PAIS_POR_FILTRO = "Se ha presentado un problema inesperado tratando de consultar la informacion de los paises deseados. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_CONSULTANDO_TODOS_LOS_PAISES = "Se ha presentado un problema inesperado tratando de consultar la informacion de todos los paises. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_CONSULTANDO_PAIS_POR_ID = "Se ha presentado un problema inesperado tratando de consultar la informacion del pais deseado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
 
     }
 }

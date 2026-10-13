@@ -1,7 +1,7 @@
 package co.edu.uco.libreriauco.libreriauco.transversal.excepciones.enums;
 
 public enum Capa {
-    General, DATOS,NEGOCIO,CONTROLADOR,ENTIDAD,DTO,DOMINIO,TRANSVERSAL
+    General, DATOS,NEGOCIO,FACHADA,CONTROLADOR,ENTIDAD,DTO,DOMINIO,TRANSVERSAL
 
 }
 

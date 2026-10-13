@@ -18,12 +18,12 @@ public class PaisEntidadAssembler implements EntidadAssembler<PaisDominio, PaisE
     public PaisEntidad convertirAEntidad(PaisDominio dominio) {
         var dominioTmp = UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(dominio,
                 new PaisDominio.Builder().build());
-        return new PaisEntidad(dominioTmp.getId(), dominioTmp.getNombre());
+        return new PaisEntidad.Builder().id(dominioTmp.getId()).nombre(dominioTmp.getNombre()).build();
     }
 
     @Override
     public PaisDominio convertirADominio(PaisEntidad entidad) {
-        var entidadTmp= UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new PaisEntidad());
+        var entidadTmp= UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(entidad, new PaisEntidad.Builder().build());
 
         return new PaisDominio.Builder().id(entidadTmp.getId()).nombre(entidadTmp.getNombre()).build();
     }
