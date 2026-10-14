@@ -2,7 +2,7 @@ package co.edu.uco.libreriauco.libreriauco.transversal.Utilitario;
 
 import java.util.UUID;
 public class UtilId {
-       public static UUID VALOR_DEFECTO = UUID.fromString("00000000-0000-0000-0000-000000000000");
+       public static final UUID VALOR_DEFECTO = UUID.fromString("00000000-0000-0000-0000-000000000000");
 
         //que no se pueda crear el objeto id directaente desde otra clase , si no que
         // solamente se puede aqui, para poder hacerle el control y que no sea nula nunca
@@ -11,7 +11,7 @@ public class UtilId {
         //metodo para generar el id
         public static UUID generarId(){
             //aqui on UUID por que quiero que me retorne un objeto de ese tipo
-            return UUID.randomUUID();
+            return UUID.ofEpochMillis(UtilFecha.fechaParaMillins());
         }
 
         //Aqui ya asegure de que el id no sea nulo si no siempre un valor
@@ -19,6 +19,11 @@ public class UtilId {
             //aqui puedo hacer el retorno con el operador Ternario
             return UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(id, VALOR_DEFECTO);
         }
+
+         public static String generarIdComoTexto(){
+            return generarId().toString();
+          }
+
 
     }
 

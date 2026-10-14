@@ -90,4 +90,12 @@ public class CatalogoMensajes {
         public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_CONSULTANDO_PAIS_POR_ID = "Se ha presentado un problema inesperado tratando de consultar la informacion del pais deseado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
 
     }
+
+    public static class AbstractRestController{
+
+        private AbstractRestController() {
+        }
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_EN_CONTROLADOR = "Se ha presentado un problema inesperado tratando de llevar a cabo la operacion deseada.Por favor intente de nuevo y si el problema persiste contacte al administrador y entreguele el codigo que se muestra a continuacion ";
+    }
+
 }

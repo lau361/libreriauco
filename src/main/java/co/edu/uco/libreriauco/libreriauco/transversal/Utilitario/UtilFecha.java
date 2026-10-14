@@ -1,6 +1,9 @@
 package co.edu.uco.libreriauco.libreriauco.transversal.Utilitario;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 
 public class UtilFecha {
@@ -28,7 +31,13 @@ public class UtilFecha {
 
     }
 
+    public static LocalDateTime fechaActual(){
+        return LocalDateTime.now(ZoneId.of("America/Bogota"));
+    }
 
+    public static long fechaParaMillins(){
+        return Instant.now().toEpochMilli();
+    }
 
 
 
