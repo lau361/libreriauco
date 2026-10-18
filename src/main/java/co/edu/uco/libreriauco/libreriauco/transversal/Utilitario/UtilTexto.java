@@ -70,4 +70,12 @@ public class UtilTexto {
         return obtenerLongitudCadena(valorSanitizado)>= longitudInicial && obtenerLongitudCadena(valorSanitizado)<=longitudFinal;
     }
 
+    public String concatenar(Object...valores){
+        var resultado= new StringBuilder();
+        for(var valor:valores){
+            resultado.append(UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(valor, vacia));
+        }
+        return  resultado.toString();
+    }
+
 }
