@@ -1,0 +1,23 @@
+info:
+  name: RegistrarInformacionNuevoPais
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:986/api/v1/paises
+  body:
+    type: json
+    data: |-
+      
+      {
+        "nombre": "Argentina"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

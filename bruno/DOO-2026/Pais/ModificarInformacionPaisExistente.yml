@@ -1,0 +1,23 @@
+info:
+  name: ModificarInformacionPaisExistente
+  type: http
+  seq: 2
+
+http:
+  method: PUT
+  url: http://localhost:986/api/v1/paises/01A15001-B6E7-7DB3-B4AA-C6905C51E6E7
+  body:
+    type: json
+    data: |-
+      { 
+
+        "nombre": "Francia"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

@@ -1,0 +1,16 @@
+info:
+  name: darBajaInformacionPaisExistente
+  type: http
+  seq: 3
+
+http:
+  method: DELETE
+  url: http://localhost:986/api/v1/paises/01A15001-B6E7-7DB3-B4AA-C6905C51E6E7
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
