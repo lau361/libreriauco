@@ -47,19 +47,13 @@ public class PaisSqlServerDao extends SqlDAO implements PaisDAO {
     @Override
     public PaisEntidad consultarPorId(UUID uuid) {
         var sentenciaSql="select id, nombre from pais where id=?";
-        //si el pais no tiene nada para evitar nulo , utilizamos lo de los utilitarios , pero con builder
         var PaisEncontrado= new PaisEntidad.Builder().build();
-        //aqui es donde se inicio la consulta del pais ent es donde voy a poner el logger con la info
         Logger_.info("Se inicio la consulta del pais con id {}", uuid);
         try(var sentencia= getConexion().prepareStatement(sentenciaSql)){
-            //solo tengo que consultar por id
             sentencia.setObject(1,uuid);
-
             var resultado = sentencia.executeQuery();
             if(resultado.next()){
-                //si entra aca es por que se encontro un pais
                 PaisEncontrado = new PaisEntidad.Builder().id(UUID.fromString(resultado.getString("id"))).nombre(resultado.getString("nombre")).build();
-
                 Logger_.info("Pais encontrado : {}", PaisEncontrado.getNombre());
             }else{
                 Logger_.warn("No se encontro ningun pais con id {}", uuid);
@@ -81,19 +75,21 @@ public class PaisSqlServerDao extends SqlDAO implements PaisDAO {
     //bn
     @Override
     public List<PaisEntidad> consultarPorFiltro(PaisEntidad filtro) {
+        var cont=0;
         var paisesEncontrados = new ArrayList<PaisEntidad>();
-        var sentenciaSql = "select id, nombre from pais where 1=1";
+        var sentenciaSql = "select id, nombre from pais ";
         var parametros = new ArrayList<Object>();
         if (!UtilId.VALOR_DEFECTO.equals(filtro.getId())) {
-            sentenciaSql = sentenciaSql + " and id = ?";
+            sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql ,(cont==0 ? " where " : " and ") ," id = ? ");
             parametros.add(filtro.getId());
+            cont=cont +1;
         }
         if (!UtilTexto.getUtilTexto().esVacia(filtro.getNombre())) {
-            sentenciaSql = sentenciaSql + " and nombre = ?";
-            parametros.add(filtro.getNombre());
+            sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql ,(cont==0 ? " where " : " and ") ," nombre like ? ");
+            parametros.add(UtilTexto.getUtilTexto().concatenar("%",filtro.getNombre(),"%"));
+            cont=cont +1;
         }
-        // el orden va siempre al final
-        sentenciaSql = sentenciaSql + " order by nombre asc";
+        sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql , " order by nombre asc ");
 
         try (var sentencia = getConexion().prepareStatement(sentenciaSql)) {
 
@@ -120,7 +116,32 @@ public class PaisSqlServerDao extends SqlDAO implements PaisDAO {
         return paisesEncontrados;
     }
 
-//bn
+    @Override
+    public List<PaisEntidad> consultarPorNombre(String nombre) {
+        var paisesEncontrados = new ArrayList<PaisEntidad>();
+        var sentenciaSql = "select id, nombre from pais where nombre =? ";
+        try (var sentencia = getConexion().prepareStatement(sentenciaSql)) {
+            sentencia.setString(1, nombre);
+
+            var resultado = sentencia.executeQuery();
+            while (resultado.next()) {
+                var pais = new PaisEntidad.Builder().id(UUID.fromString(resultado.getString("id"))).nombre(resultado.getString("nombre")).build();
+                paisesEncontrados.add(pais);
+            }
+
+        } catch (SQLException excepcion) {
+            //el controlado
+            var mensajeUsuario = CatalogoMensajes.PaisSqlServerDao.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAIS_POR_FILTRO;
+            throw LibreriaUcoDatosExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+        } catch (Exception excepcion) {
+            //no controlado
+            var mensajeUsuario = CatalogoMensajes.PaisSqlServerDao.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAIS_POR_FILTRO;
+            throw LibreriaUcoDatosExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+        }
+        return paisesEncontrados;
+    }
+
+    //bn
      @Override
       public List<PaisEntidad> consultarTodos() {
          var sentenciaSql="select id,nombre from pais order by nombre asc";

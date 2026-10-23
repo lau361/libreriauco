@@ -23,11 +23,14 @@ public class DepartamentoSqlServerDao extends SqlDAO implements DepartamentoDao{
 
     @Override
     public DepartamentoEntidad consultarPorId(UUID uuid) {
-        var sentenciaSql = "select d.id as id_departamento, d.nombre as nombre_departamento, "
-                + "p.id as id_pais, p.nombre as nombre_pais "
-                + "from departamento as d "
-                + "inner join pais as p on d.id_pais = p.id "
-                + "where d.id = ?";
+        var sentenciaSql =
+                """
+                select d.id as id_departamento, d.nombre as nombre_departamento,
+                p.id as id_pais, p.nombre as nombre_pais
+                from departamento as d
+                inner join pais as p on d.id_pais = p.id
+                where d.id = ?
+                """;
         var departamentoEncontrado = new DepartamentoEntidad.Builder().build();
         try (var sentencia = getConexion().prepareStatement(sentenciaSql)) {
             sentencia.setObject(1, uuid);
@@ -58,36 +61,40 @@ public class DepartamentoSqlServerDao extends SqlDAO implements DepartamentoDao{
 
     @Override
     public List<DepartamentoEntidad> consultarPorFiltro(DepartamentoEntidad filtro) {
-
+        var cont= 0;
         var departamentosEncontrados = new ArrayList<DepartamentoEntidad>();
-        var sentenciaSql = "select d.id as id_departamento, d.nombre as nombre_departamento, "
-                + "p.id as id_pais, p.nombre as nombre_pais "
-                + "from departamento as d "
-                + "inner join pais as p on d.id_pais = p.id "
-                + "where 1=1";
+        var sentenciaSql =
+                """
+                select d.id as id_departamento, d.nombre as nombre_departamento,
+                p.id as id_pais, p.nombre as nombre_pais
+                from departamento as d
+                inner join pais as p on d.id_pais = p.id
+                """;
         var parametros = new ArrayList<Object>();
-        //este seria el de departamento
+
         if (!UtilId.VALOR_DEFECTO.equals(filtro.getId())) {
-            sentenciaSql = sentenciaSql + " and d.id = ?";
+            sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql ,(cont==0 ? " where " : " and "),"  d.id = ? ");
             parametros.add(filtro.getId());
+            cont=cont +1;
         }
-        //este el de pais
         if (!UtilId.VALOR_DEFECTO.equals(filtro.getPais().getId())) {
-            sentenciaSql = sentenciaSql + " and p.id = ?";
+            sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql ,(cont==0 ? " where " : " and "),"   p.id = ? ");
             parametros.add(filtro.getPais().getId());
+            cont=cont +1;
         }
 
         if (!UtilTexto.getUtilTexto().esVacia(filtro.getNombre())) {
-            sentenciaSql = sentenciaSql + " and d.nombre = ?";
-            parametros.add(filtro.getNombre());
+            sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql ,(cont==0 ? " where " : " and "),"   d.nombre like ? ");
+            parametros.add(UtilTexto.getUtilTexto().concatenar("%",filtro.getNombre(),"%"));
+            cont=cont +1;
         }
-        //pais
         if (!UtilTexto.getUtilTexto().esVacia(filtro.getPais().getNombre())) {
-            sentenciaSql = sentenciaSql + " and p.nombre = ?";
-            parametros.add(filtro.getPais().getNombre());
+            sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql ,(cont==0 ? " where " : " and "),"   p.nombre like ? ");
+            parametros.add(UtilTexto.getUtilTexto().concatenar("%",filtro.getPais().getNombre(),"%"));
+            cont=cont +1;
+
         }
-        // el orden va siempre al final
-        sentenciaSql = sentenciaSql + " order by d.nombre asc";
+        sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql , " order by d.nombre asc " );
 
         try (var sentencia = getConexion().prepareStatement(sentenciaSql)) {
 
@@ -96,10 +103,7 @@ public class DepartamentoSqlServerDao extends SqlDAO implements DepartamentoDao{
             }
 
             var resultado = sentencia.executeQuery();
-            // por cada fila que llegó, se arma un departamento y se agrega a la lista
             while (resultado.next()) {
-                //primero se arma el pais para luego poderlo asignar a departamento
-                //necesito el pais ya listo para poderlo asignar
                 var pais = new PaisEntidad.Builder()
                         .id(UUID.fromString(resultado.getString("id_pais")))
                         .nombre(resultado.getString("nombre_pais"))
@@ -125,14 +129,59 @@ public class DepartamentoSqlServerDao extends SqlDAO implements DepartamentoDao{
         }
         return departamentosEncontrados;
     }
+    @Override
+    public List<DepartamentoEntidad> consultarPorNombre(String nombre) {
+        var departamentosEncontrados = new ArrayList<DepartamentoEntidad>();
+        var sentenciaSql ="""
+                select d.id as id_departamento, d.nombre as nombre_departamento,
+                p.id as id_pais, p.nombre as nombre_pais
+                from departamento as d
+                inner join pais as p on d.id_pais = p.id
+                where d.nombre= ?
+                """;
+
+        try (var sentencia = getConexion().prepareStatement(sentenciaSql)) {
+            sentencia.setString(1, nombre);
+
+            var resultado = sentencia.executeQuery();
+            while (resultado.next()) {
+                var pais = new PaisEntidad.Builder()
+                        .id(UUID.fromString(resultado.getString("id_pais")))
+                        .nombre(resultado.getString("nombre_pais"))
+                        .build();
+
+                var departamento = new DepartamentoEntidad.Builder()
+                        .id(UUID.fromString(resultado.getString("id_departamento")))
+                        .nombre(resultado.getString("nombre_departamento"))
+                        .pais(pais)
+                        .build();
+
+                departamentosEncontrados.add(departamento);
+
+            }
+
+        } catch (SQLException excepcion) {
+            //el controlado
+            var mensajeUsuario = CatalogoMensajes.PaisSqlServerDao.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAIS_POR_FILTRO;
+            throw LibreriaUcoDatosExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+        } catch (Exception excepcion) {
+            //no controlado
+            var mensajeUsuario = CatalogoMensajes.PaisSqlServerDao.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAIS_POR_FILTRO;
+            throw LibreriaUcoDatosExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+        }
+        return departamentosEncontrados;
+    }
 
     @Override
     public List<DepartamentoEntidad> consultarTodos() {
-        var sentenciaSql = "select d.id as id_departamento, d.nombre as nombre_departamento, "
-                + "p.id as id_pais, p.nombre as nombre_pais "
-                + "from departamento as d "
-                + "inner join pais as p on d.id_pais = p.id "
-                + "order by d.nombre asc";
+        var sentenciaSql =
+                """
+                select d.id as id_departamento, d.nombre as nombre_departamento,
+                p.id as id_pais, p.nombre as nombre_pais
+                from departamento as d
+                inner join pais as p on d.id_pais = p.id
+                order by d.nombre asc
+                """;
         var departamentosEncontrados = new ArrayList<DepartamentoEntidad>();
 
         try (var sentencia = getConexion().prepareStatement(sentenciaSql)) {

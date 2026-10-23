@@ -24,12 +24,8 @@ public class AsegurarNombrePaisModificadoNoExisteRule implements Rule<Object> {
         var idPais = (UUID) datos[0];
         var nombrePais = (String) datos[1];
         var daoFactory = (DaoFactory) datos[2];
+        var resultados = daoFactory.obtenerPaisDAO().consultarPorNombre(nombrePais);
 
-        var entidadFiltro = new PaisEntidad.Builder().nombre(nombrePais).build();
-
-        var resultados = daoFactory.obtenerPaisDAO().consultarPorFiltro(entidadFiltro);
-
-        //si el que tiene ese nombre es el mismo pais que estoy modificando no hay problema
         for (var paisEncontrado : resultados) {
             if (!paisEncontrado.getId().equals(idPais)) {
                 var mensajeUsuario = CatalogoMensajes.PaisNegocioImpl.PAIS_EXISTE_CON_EL_MISMO_NOMBRE_A_MODIFICAR;

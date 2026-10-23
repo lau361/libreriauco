@@ -24,9 +24,7 @@ public class AsegurarNombreNuevoPaisNoExisteRule implements Rule<Object> {
     public void ejecutar(Object... datos) {
         var nombrePais = (String)datos[0]; // aseguro que el tipo de dato que reciba sea string
         var daoFactory = (DaoFactory)datos[1]; // lo que viene aqui estoy seguro que es de tipo dao factory
-        var entidadFiltro = new PaisEntidad.Builder().nombre(nombrePais).build();
-
-        var resultados = daoFactory.obtenerPaisDAO().consultarPorFiltro(entidadFiltro);
+        var resultados = daoFactory.obtenerPaisDAO().consultarPorNombre(nombrePais);
         if (!resultados.isEmpty()) {
             var mensajeUsuario = CatalogoMensajes.PaisNegocioImpl.PAIS_EXISTE_CON_EL_MISMO_NOMBRE_A_CREAR;
             throw LibreriaUcoNegocioExcepcion.crear(mensajeUsuario);

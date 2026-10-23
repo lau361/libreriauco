@@ -2,7 +2,7 @@ package co.edu.uco.libreriauco.libreriauco.transversal.Utilitario;
 
 public class UtilTexto {
     private static UtilTexto instancia;
-    public static String vacia = "";
+    public static final String vacia = "";
     public static final String SOLO_LETRAS_Y_ESPACIOS = "^[a-zA-Z ÑñáÁéÉíÍóÓúÚ]*$";
     private UtilTexto() {
     }
@@ -26,10 +26,7 @@ public class UtilTexto {
     }
 
     public boolean esVacia(String texto) {
-        if(esNula(texto)){
-            texto= vacia;
-        }
-        return vacia.equals(texto);
+        return vacia.equals(quitarEspaciosEnBlanco(texto));
     }
 
 
@@ -42,11 +39,9 @@ public class UtilTexto {
     }
 
 
-    //cuando no me ingresan el valor por defecto , ent el valor defecto va a ser vacia
     public  String obtenerValorDefecto(String valor){
         return obtenerValorDefecto(valor,vacia);
     }
-    //aqui se hace ese valor por defecto para que si el valor es null , esto me devuelva vacia
 
     public String quitarEspaciosEnBlanco(String valor){
         return obtenerValorDefecto(valor).trim();
@@ -55,14 +50,11 @@ public class UtilTexto {
     public int obtenerLongitudCadena(String valor){
         return obtenerValorDefecto(valor).length();
     }
-     //la persona entre por consola y dice si si o si no
     public int obtenerLongitudCadena(String valor, boolean quitarEspaciosEnBlanco){
 
         return quitarEspaciosEnBlanco ?
                 obtenerLongitudCadena(quitarEspaciosEnBlanco(valor)): obtenerLongitudCadena(valor);
     }
-
-     //condición ? si_es_true : si_es_false
     public boolean longitudCadenaEsValida(String valor, int longitudInicial , int longitudFinal, boolean quitarEspaciosEnBlanco){
 
         var valorSanitizado = quitarEspaciosEnBlanco ? quitarEspaciosEnBlanco(valor): valor;

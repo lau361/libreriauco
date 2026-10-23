@@ -24,13 +24,16 @@ public class CiudadSqlServerDao extends SqlDAO implements CiudadDao {
 
     @Override
     public CiudadEntidad consultarPorId(UUID uuid) {
-        var sentenciaSql = "select c.id as id_ciudad, c.nombre as nombre_ciudad, "
-                + "d.id as id_departamento, d.nombre as nombre_departamento, "
-                + "p.id as id_pais, p.nombre as nombre_pais "
-                + "from ciudad as c "
-                + "inner join departamento as d on c.id_departamento = d.id "
-                + "inner join pais as p on d.id_pais = p.id "
-                + "where c.id = ?";
+        var sentenciaSql =
+                """
+                select c.id as id_ciudad, c.nombre as nombre_ciudad,
+                d.id as id_departamento, d.nombre as nombre_departamento,
+                p.id as id_pais, p.nombre as nombre_pais
+                from ciudad as c
+                inner join departamento as d on c.id_departamento = d.id
+                inner join pais as p on d.id_pais = p.id
+                where c.id = ?
+                """;
         var ciudadEncontrada = new CiudadEntidad.Builder().build();
         try (var sentencia = getConexion().prepareStatement(sentenciaSql)) {
             sentencia.setObject(1, uuid);
@@ -67,32 +70,38 @@ public class CiudadSqlServerDao extends SqlDAO implements CiudadDao {
     @Override
     public List<CiudadEntidad> consultarPorFiltro(CiudadEntidad filtro) {
         var ciudadesEncontradas = new ArrayList<CiudadEntidad>();
-        var sentenciaSql = "select c.id as id_ciudad, c.nombre as nombre_ciudad, "
-                + "d.id as id_departamento, d.nombre as nombre_departamento, "
-                + "p.id as id_pais, p.nombre as nombre_pais "
-                + "from ciudad as c "
-                + "inner join departamento as d on c.id_departamento = d.id "
-                + "inner join pais as p on d.id_pais = p.id "
-                + "where 1=1";
+        var cont=0;
+        var sentenciaSql =
+                """
+                 select c.id as id_ciudad, c.nombre as nombre_ciudad, 
+                d.id as id_departamento, d.nombre as nombre_departamento, 
+                p.id as id_pais, p.nombre as nombre_pais 
+                from ciudad as c 
+                inner join departamento as d on c.id_departamento = d.id 
+                inner join pais as p on d.id_pais = p.id 
+                """;
         var parametros = new ArrayList<Object>();
         if (!UtilId.VALOR_DEFECTO.equals(filtro.getId())) {
-            sentenciaSql = sentenciaSql + " and c.id = ?";
+            sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql ,( cont==0 ? " where " : " and "), " c.id = ? ");
             parametros.add(filtro.getId());
+            cont=cont+1;
         }
         if (!UtilTexto.getUtilTexto().esVacia(filtro.getNombre())) {
-            sentenciaSql = sentenciaSql + " and c.nombre = ?";
-            parametros.add(filtro.getNombre());
+            sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql ,( cont==0 ? " where " : " and "), " c.nombre like ? ");
+            parametros.add(UtilTexto.getUtilTexto().concatenar("%",filtro.getNombre(),"%"));
+            cont=cont+1;
         }
         if (!UtilId.VALOR_DEFECTO.equals(filtro.getDepartamento().getId())) {
-            sentenciaSql = sentenciaSql + " and d.id = ?";
+            sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql ,( cont==0 ? " where " : " and "), " d.id = ? ");
             parametros.add(filtro.getDepartamento().getId());
+            cont=cont+1;
         }
         if (!UtilTexto.getUtilTexto().esVacia(filtro.getDepartamento().getNombre())) {
-            sentenciaSql = sentenciaSql + " and d.nombre = ?";
-            parametros.add(filtro.getDepartamento().getNombre());
+            sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql ,( cont==0 ? " where " : " and "), " d.nombre like ? ");
+            parametros.add(UtilTexto.getUtilTexto().concatenar("%",filtro.getDepartamento().getNombre(),"%"));
+            cont=cont+1;
         }
-        // el orden va siempre al final
-        sentenciaSql = sentenciaSql + " order by c.nombre asc";
+        sentenciaSql =UtilTexto.getUtilTexto().concatenar( sentenciaSql , " order by c.nombre asc ");
 
         try (var sentencia = getConexion().prepareStatement(sentenciaSql)) {
 
@@ -131,16 +140,65 @@ public class CiudadSqlServerDao extends SqlDAO implements CiudadDao {
         }
         return ciudadesEncontradas;
     }
+    @Override
+    public List<CiudadEntidad> consultarPorNombre(String nombre) {
+        var ciudadesEncontradas = new ArrayList<CiudadEntidad>();
+        var sentenciaSql =
+                """
+                select c.id as id_ciudad, c.nombre as nombre_ciudad,
+                d.id as id_departamento, d.nombre as nombre_departamento,
+                p.id as id_pais, p.nombre as nombre_pais
+                from ciudad as c
+                inner join departamento as d on c.id_departamento = d.id
+                inner join pais as p on d.id_pais = p.id
+                where c.nombre = ?
+                """;
+
+        try (var sentencia = getConexion().prepareStatement(sentenciaSql)) {
+            sentencia.setString(1, nombre);
+            var resultado = sentencia.executeQuery();
+            while (resultado.next()) {
+                var pais = new PaisEntidad.Builder()
+                        .id(UUID.fromString(resultado.getString("id_pais")))
+                        .nombre(resultado.getString("nombre_pais"))
+                        .build();
+                var departamento = new DepartamentoEntidad.Builder()
+                        .id(UUID.fromString(resultado.getString("id_departamento")))
+                        .nombre(resultado.getString("nombre_departamento"))
+                        .pais(pais)
+                        .build();
+                var ciudad = new CiudadEntidad.Builder()
+                        .id(UUID.fromString(resultado.getString("id_ciudad")))
+                        .nombre(resultado.getString("nombre_ciudad"))
+                        .departamento(departamento)
+                        .build();
+                ciudadesEncontradas.add(ciudad);
+            }
+
+        } catch (SQLException excepcion) {
+            //el controlado
+            var mensajeUsuario = CatalogoMensajes.CiudadSqlServerDao.USUARIO_ERROR_PROBLEMA_CONSULTANDO_CIUDAD_POR_FILTRO;
+            throw LibreriaUcoDatosExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+        } catch (Exception excepcion) {
+            //no controlado
+            var mensajeUsuario = CatalogoMensajes.CiudadSqlServerDao.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_CIUDAD_POR_FILTRO;
+            throw LibreriaUcoDatosExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+        }
+        return ciudadesEncontradas;
+    }
 
     @Override
     public List<CiudadEntidad> consultarTodos() {
-        var sentenciaSql = "select c.id as id_ciudad, c.nombre as nombre_ciudad, "
-                + "d.id as id_departamento, d.nombre as nombre_departamento, "
-                + "p.id as id_pais, p.nombre as nombre_pais "
-                + "from ciudad as c "
-                + "inner join departamento as d on c.id_departamento = d.id "
-                + "inner join pais as p on d.id_pais = p.id "
-                + "order by c.nombre asc";
+        var sentenciaSql =
+                """
+                select c.id as id_ciudad, c.nombre as nombre_ciudad,
+                d.id as id_departamento, d.nombre as nombre_departamento,
+                p.id as id_pais, p.nombre as nombre_pais
+                from ciudad as c
+                inner join departamento as d on c.id_departamento = d.id
+                inner join pais as p on d.id_pais = p.id
+                order by c.nombre asc
+                """;
         var ciudadesEncontradas = new ArrayList<CiudadEntidad>();
 
         try (var sentencia = getConexion().prepareStatement(sentenciaSql)) {

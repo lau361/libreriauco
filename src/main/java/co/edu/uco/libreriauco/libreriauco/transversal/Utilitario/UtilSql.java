@@ -74,7 +74,7 @@ public class UtilSql {
             try {
                 conexion.commit();
             } catch (SQLException exception) {
-                var mensajeUsuario = CatalogoMensajes.UtilSql.USUARIO_ERROR_PROBLEMA_COMFIRMANDO_TRANSACCION_SQL;
+                var mensajeUsuario = CatalogoMensajes.UtilSql.USUARIO_ERROR_PROBLEMA_CONFIRMANDO_TRANSACCION_SQL;
                 throw LibreriaUcoTransversalExcepcion.crear(mensajeUsuario, exception.getMessage(), exception);
             }
             catch (Exception exception) {

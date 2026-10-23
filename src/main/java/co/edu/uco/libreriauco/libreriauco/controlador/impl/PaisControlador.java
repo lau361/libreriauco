@@ -6,6 +6,8 @@ import co.edu.uco.libreriauco.libreriauco.dto.PaisDTO;
 import co.edu.uco.libreriauco.libreriauco.negocio.fachada.PaisFachada;
 import co.edu.uco.libreriauco.libreriauco.negocio.fachada.impl.PaisFachadaImpl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +42,12 @@ public class PaisControlador extends AbstractRestController {
     @GetMapping("/dummy")
     public  PaisDTO obtenerDummy(){
         return new PaisDTO();
+    }
+
+    @GetMapping("/login")
+    public  String hacerLogin(@AuthenticationPrincipal OidcUser datosUsuario){
+        return "Hola Usuario %s. Te has autenticado con el correo %s . Su token es %s".formatted(datosUsuario.getFullName(),
+                datosUsuario.getEmail(), datosUsuario.getIdToken().getTokenValue());
     }
 
     @PostMapping

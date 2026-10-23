@@ -5,6 +5,9 @@ import java.util.List;
 public interface ConsultarDao<E,Id> {
      E consultarPorId(Id id);
      List<E>consultarPorFiltro(E filtro);
+
+     List<E>consultarPorNombre(String nombre);
+
      List<E> consultarTodos();
 
 }

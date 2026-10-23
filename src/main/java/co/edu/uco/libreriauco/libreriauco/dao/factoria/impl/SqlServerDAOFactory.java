@@ -30,6 +30,7 @@ public class SqlServerDAOFactory extends DaoFactory {
         return new HikariDataSource(configuracion);
     }
 
+
     @Override
     protected void abrirConexion() {
          //como abrir la conexion con sql server desde java

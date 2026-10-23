@@ -1,0 +1,175 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #f2f4f7;
+    color: #1f2933;
+}
+
+header {
+    background-color: #1e3a5f;
+    color: white;
+    padding: 24px 16px;
+    text-align: center;
+}
+
+main {
+    max-width: 760px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+
+.tarjeta {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+    font-size: 18px;
+    margin-bottom: 14px;
+    color: #1e3a5f;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd2d9;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #2f6fb2;
+}
+
+button {
+    background-color: #2f6fb2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #255a91;
+}
+
+button.secundario {
+    background-color: #e4e7eb;
+    color: #1f2933;
+}
+
+button.secundario:hover {
+    background-color: #cbd2d9;
+}
+
+button.peligro {
+    background-color: #c0392b;
+}
+
+button.peligro:hover {
+    background-color: #a93226;
+}
+
+.botones {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.buscador {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+
+.mensaje {
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.mensaje.exito {
+    background-color: #e3f6e8;
+    color: #1e7a3a;
+}
+
+.mensaje.error {
+    background-color: #fdecea;
+    color: #b0302a;
+}
+
+.oculto {
+    display: none;
+}
+
+@media (max-width: 500px) {
+    .buscador {
+        flex-direction: column;
+    }
+}
+
+.lista-paises {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.tarjeta-pais {
+    border: 1px solid #e4e7eb;
+    border-radius: 8px;
+    padding: 14px;
+    background-color: #f9fafb;
+}
+
+.tarjeta-pais h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.tarjeta-pais button {
+    padding: 6px 10px;
+    margin-right: 4px;
+}
+
+.aviso {
+    color: #7b8794;
+    text-align: center;
+    padding: 12px;
+}
+
+select {
+    padding: 10px;
+    border: 1px solid #cbd2d9;
+    border-radius: 6px;
+    font-size: 15px;
+    background-color: white;
+}
+
+.tarjeta-pais small {
+    display: block;
+    font-size: 11px;
+    color: #7b8794;
+    margin: -6px 0 10px;
+    word-break: break-all;
+}

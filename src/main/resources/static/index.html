@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Librería UCO </title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<header>
+    <h1>Librería UCO</h1>
+</header>
+<main>
+    <div id="mensaje" class="mensaje oculto"></div>
+
+    <section class="tarjeta">
+        <h2 id="tituloFormulario">Registrar país</h2>
+        <form id="formularioPais">
+            <input type="hidden" id="idPais">
+            <label for="nombrePais">Nombre</label>
+            <input type="text" id="nombrePais" placeholder="Ej: Colombia">
+            <div class="botones">
+                <button type="submit" id="botonGuardar">Registrar</button>
+                <button type="button" id="botonCancelar" class="secundario oculto">Cancelar</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="tarjeta">
+        <h2>Países registrados</h2>
+        <div class="buscador">
+            <select id="tipoBusqueda">
+                <option value="nombre">Nombre</option>
+                <option value="id">Id</option>
+            </select>
+            <input type="text" id="filtroNombre" placeholder="Escribe el nombre o el id">
+            <button type="button" id="botonBuscar">Buscar</button>
+            <button type="button" id="botonLimpiar" class="secundario">Ver todos</button>
+        </div>
+        <div id="listaPaises" class="lista-paises"></div>
+    </section>
+
+</main>
+<script src="app.js"></script>
+</body>
+</html>

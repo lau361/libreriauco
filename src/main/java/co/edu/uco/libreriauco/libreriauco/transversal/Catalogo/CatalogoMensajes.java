@@ -16,7 +16,7 @@ public class CatalogoMensajes {
        public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CERRANDO_CONEXION_SQL = "Se ha presentado un problema NO CONTROLADO tratando de validar si la conexion contra la fuente de informacion en la cual se iba a tratar de llevar a cabo la operacion deseada se podia cerrar. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
        public static final String USUARIO_ERROR_PROBLEMA_INICIANDO_TRANSACCION_SQL = "Se ha presentado un problema  tratando de iniciar  la transaccion contra la fuente de informacion . Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
        public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_INICIANDO_TRANSACCION_SQL = "Se ha presentado un problema NO CONTROLADO  tratando de iniciar  la transaccion contra la fuente de informacion . Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
-       public static final String USUARIO_ERROR_PROBLEMA_COMFIRMANDO_TRANSACCION_SQL = "Se ha presentado un problema  tratando de confirmar  la transaccion contra la fuente de informacion . Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
+       public static final String USUARIO_ERROR_PROBLEMA_CONFIRMANDO_TRANSACCION_SQL = "Se ha presentado un problema  tratando de confirmar  la transaccion contra la fuente de informacion . Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
        public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONFIRMANDO_TRANSACCION_SQL = "Se ha presentado un problema NO CONTROLADO  tratando de confirmar  la transaccion contra la fuente de informacion . Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
        public static final String USUARIO_ERROR_PROBLEMA_CANCELANDO_TRANSACCION_SQL = "Se ha presentado un problema  tratando de cancelar  la transaccion contra la fuente de informacion . Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
        public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CANCELANDO_TRANSACCION_SQL = "Se ha presentado un problema NO CONTROLADO  tratando de cancelar  la transaccion contra la fuente de informacion . Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad ";
@@ -75,6 +75,8 @@ public class CatalogoMensajes {
         public static final String PAIS_NO_EXISTE = "El pais indicado no existe. Verifique la informacion e intente de nuevo.";
         public static final String PAIS_EXISTE_CON_EL_MISMO_NOMBRE_A_MODIFICAR = "Ya existe otro pais con el nombre que se desea asignar al pais que se esta modificando";
         public static final String ID_PAIS_YA_EXISTE = "No es posible registrar el pais porque el identificador generado ya esta en uso. Por favor intente de nuevo y si el problema persiste contacte al administrador";
+        public static final String  DATOS_PAIS_NULLS ="No es posible registrar el pais porque no se recibio su informacion. Por favor intente de nuevo y si el problema persiste contacte al administrador";
+
 
     }
 
@@ -96,6 +98,18 @@ public class CatalogoMensajes {
         private AbstractRestController() {
         }
         public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_EN_CONTROLADOR = "Se ha presentado un problema inesperado tratando de llevar a cabo la operacion deseada.Por favor intente de nuevo y si el problema persiste contacte al administrador y entreguele el codigo que se muestra a continuacion ";
+    }
+
+    public static class DaoFactory {
+
+        private DaoFactory() {
+        }
+        public static final String USUARIO_ERROR_CONEXION_NULA = "No es posible continuar con la operacion deseada porque no se recibio la conexion contra la fuente de informacion. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion";
+        public static final String USUARIO_ERROR_CONEXION_CERRADA = "No es posible continuar con la operacion deseada porque la conexion contra la fuente de informacion se encuentra cerrada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion ";
+        public static final String USUARIO_ERROR_PROBLEMA_VALIDANDO_CONEXION = "Se ha presentado un problema tratando de validar si la conexion contra la fuente de informacion estaba abierta. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion ";
+
+
+        public static final String USUARIO_ERROR_FUENTE_INFORMACION_NO_HABILITADA = "La fuente de informacion que se solicito para llevar a cabo la operacion deseada no esta habilitada. Por favor contacte al administrador de la aplicacion y reporte la novedad";
     }
 
 }

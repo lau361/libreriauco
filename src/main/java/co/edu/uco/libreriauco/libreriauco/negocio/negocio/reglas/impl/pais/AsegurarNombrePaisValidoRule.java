@@ -17,8 +17,6 @@ public class AsegurarNombrePaisValidoRule implements Rule<String> {
         return instancia;
     }
 
-    //solo recibe de tipo string ent no necesito que sea de tipo object esa es para cuando
-    //quiero que reciba cualquier tipo de dato
 
     @Override
     public void ejecutar(String... datos) {

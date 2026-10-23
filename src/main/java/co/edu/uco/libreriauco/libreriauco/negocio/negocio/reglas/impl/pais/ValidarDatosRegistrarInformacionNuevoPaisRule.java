@@ -2,6 +2,9 @@ package co.edu.uco.libreriauco.libreriauco.negocio.negocio.reglas.impl.pais;
 
 import co.edu.uco.libreriauco.libreriauco.dominio.PaisDominio;
 import co.edu.uco.libreriauco.libreriauco.negocio.negocio.reglas.Rule;
+import co.edu.uco.libreriauco.libreriauco.transversal.Catalogo.CatalogoMensajes;
+import co.edu.uco.libreriauco.libreriauco.transversal.Utilitario.UtilObjeto;
+import co.edu.uco.libreriauco.libreriauco.transversal.excepciones.LibreriaUcoNegocioExcepcion;
 
 public class ValidarDatosRegistrarInformacionNuevoPaisRule implements Rule<PaisDominio> {
 
@@ -17,6 +20,12 @@ public class ValidarDatosRegistrarInformacionNuevoPaisRule implements Rule<PaisD
     @Override
     public void ejecutar(PaisDominio... datos) {
         var dominio = datos[0];
-        AsegurarNombrePaisValidoRule.obtenerInstancia().ejecutar(dominio.getNombre());
+        if(UtilObjeto.esNulo(dominio)){
+            var mensaje = CatalogoMensajes.PaisNegocioImpl.DATOS_PAIS_NULLS;
+            throw LibreriaUcoNegocioExcepcion.crear(mensaje);
+        }else{
+            AsegurarNombrePaisValidoRule.obtenerInstancia().ejecutar(dominio.getNombre());
+
+        }
     }
 }

@@ -20,7 +20,7 @@ public class PaisFachadaImpl implements PaisFachada {
     private PaisNegocio paisNegocio;
 
     public PaisFachadaImpl() {
-        daoFactory = new SqlServerDAOFactory();
+        daoFactory = DaoFactory.obtenerFactoria();
         paisNegocio = new PaisNegocioImpl(daoFactory);
     }
 
