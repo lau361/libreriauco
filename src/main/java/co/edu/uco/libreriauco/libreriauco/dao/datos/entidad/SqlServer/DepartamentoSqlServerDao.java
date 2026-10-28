@@ -129,6 +129,9 @@ public class DepartamentoSqlServerDao extends SqlDAO implements DepartamentoDao{
         }
         return departamentosEncontrados;
     }
+
+
+
     @Override
     public List<DepartamentoEntidad> consultarPorNombre(String nombre) {
         var departamentosEncontrados = new ArrayList<DepartamentoEntidad>();
@@ -208,6 +211,50 @@ public class DepartamentoSqlServerDao extends SqlDAO implements DepartamentoDao{
             //no controlado
             var mensajeUsuario = CatalogoMensajes.DepartamentoSqlServerDao.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_TODOS_LOS_DEPARTAMENTOS;
             throw LibreriaUcoDatosExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+        }
+        return departamentosEncontrados;
+    }
+
+    @Override
+    public List<DepartamentoEntidad> consultarDepartamentosAsociados(UUID id) {
+        var sentenciaSql=
+                """
+                select p.id as id_pais, p.nombre as nombre_pais,
+                 d.nombre as nombre_departamento , d.id as id_departamento
+                 from departamento as d
+                 inner join pais as p
+                 on d.id_pais = p.id
+                 where p.id=?
+        """;
+
+        var departamentosEncontrados= new  ArrayList<DepartamentoEntidad>();
+        try(var sentencia= getConexion().prepareStatement(sentenciaSql)){
+            sentencia.setObject(1,id);
+            var resultado = sentencia.executeQuery();
+            while (resultado.next()) {
+                var pais = new PaisEntidad.Builder()
+                        .id(UUID.fromString(resultado.getString("id_pais")))
+                        .nombre(resultado.getString("nombre_pais"))
+                        .build();
+
+                var departamento = new DepartamentoEntidad.Builder()
+                        .id(UUID.fromString(resultado.getString("id_departamento")))
+                        .nombre(resultado.getString("nombre_departamento"))
+                        .pais(pais)
+                        .build();
+
+                departamentosEncontrados.add(departamento);
+            }
+
+        }catch (SQLException excepcion){
+            var mensajeUsuario = CatalogoMensajes.PaisSqlServerDao.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAIS_POR_ID;
+            throw LibreriaUcoDatosExcepcion.crear(mensajeUsuario,excepcion.getMessage(),excepcion);
+            //el controlado
+        } catch (Exception excepcion) {
+            //no controlado
+
+            var mensajeUsuario = CatalogoMensajes.PaisSqlServerDao.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAIS_POR_ID;
+            throw LibreriaUcoDatosExcepcion.crear(mensajeUsuario,excepcion.getMessage(),excepcion);
         }
         return departamentosEncontrados;
     }

@@ -2,6 +2,7 @@ package co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.SqlServer;
 
 import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.PaisDAO;
 import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.SqlDAO;
+import co.edu.uco.libreriauco.libreriauco.entidad.DepartamentoEntidad;
 import co.edu.uco.libreriauco.libreriauco.entidad.PaisEntidad;
 import co.edu.uco.libreriauco.libreriauco.transversal.Catalogo.CatalogoMensajes;
 import co.edu.uco.libreriauco.libreriauco.transversal.Utilitario.UtilId;
@@ -72,6 +73,7 @@ public class PaisSqlServerDao extends SqlDAO implements PaisDAO {
         }
         return PaisEncontrado;
     }
+
     //bn
     @Override
     public List<PaisEntidad> consultarPorFiltro(PaisEntidad filtro) {
@@ -166,7 +168,12 @@ public class PaisSqlServerDao extends SqlDAO implements PaisDAO {
     return paisesEncontrados;
    }
 
-//bn
+    @Override
+    public List<PaisEntidad> consultarDepartamentosAsociados(UUID id) {
+        return List.of();
+    }
+
+    //bn
     @Override
     public void crear(PaisEntidad entidad) {
     var sentenciaSql = "insert into pais(id,nombre) values(?,?)";

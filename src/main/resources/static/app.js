@@ -61,6 +61,7 @@ function pintarTabla(paises) {
         listaPaises.innerHTML = '<p class="aviso">No se encontraron países</p>';
         return;
     }
+
     paises.forEach(pais => {
         const tarjeta = document.createElement("div");
         tarjeta.className = "tarjeta-pais";

@@ -9,5 +9,6 @@ public interface ConsultarDao<E,Id> {
      List<E>consultarPorNombre(String nombre);
 
      List<E> consultarTodos();
+     List<E>consultarDepartamentosAsociados(Id id);
 
 }

@@ -5,12 +5,7 @@ import co.edu.uco.libreriauco.libreriauco.dominio.PaisDominio;
 import co.edu.uco.libreriauco.libreriauco.entidad.PaisEntidad;
 import co.edu.uco.libreriauco.libreriauco.negocio.negocio.PaisNegocio;
 import co.edu.uco.libreriauco.libreriauco.negocio.negocio.asembler.impl.PaisEntidadAssembler;
-import co.edu.uco.libreriauco.libreriauco.negocio.negocio.reglas.impl.pais.AsegurarIdPaisNoExisteRule;
-import co.edu.uco.libreriauco.libreriauco.negocio.negocio.reglas.impl.pais.AsegurarNombreNuevoPaisNoExisteRule;
-import co.edu.uco.libreriauco.libreriauco.negocio.negocio.reglas.impl.pais.AsegurarNombrePaisModificadoNoExisteRule;
-import co.edu.uco.libreriauco.libreriauco.negocio.negocio.reglas.impl.pais.AsegurarNombrePaisValidoRule;
-import co.edu.uco.libreriauco.libreriauco.negocio.negocio.reglas.impl.pais.AsegurarPaisExisteRule;
-import co.edu.uco.libreriauco.libreriauco.negocio.negocio.reglas.impl.pais.ValidarDatosRegistrarInformacionNuevoPaisRule;
+import co.edu.uco.libreriauco.libreriauco.negocio.negocio.reglas.impl.pais.*;
 import co.edu.uco.libreriauco.libreriauco.transversal.Utilitario.UtilId;
 
 import java.util.ArrayList;
@@ -56,6 +51,7 @@ public class PaisNegocioImpl implements PaisNegocio {
     @Override
     public void darBajaInformacionPaisExistente(UUID id) {
         AsegurarPaisExisteRule.obtenerInstancia().ejecutar(id, daoFactory);
+        AsegurarPaisNoTengaDepartamentos.obtenerInstancia().ejecutar(id, daoFactory);
         daoFactory.obtenerPaisDAO().eliminar(id);
     }
 

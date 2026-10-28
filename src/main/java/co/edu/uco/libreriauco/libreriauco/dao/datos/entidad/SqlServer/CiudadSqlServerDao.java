@@ -233,4 +233,9 @@ public class CiudadSqlServerDao extends SqlDAO implements CiudadDao {
         }
         return ciudadesEncontradas;
     }
+
+    @Override
+    public List<CiudadEntidad> consultarDepartamentosAsociados(UUID uuid) {
+        return List.of();
+    }
 }
