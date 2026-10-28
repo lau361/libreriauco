@@ -24,12 +24,9 @@ public class AsegurarPaisNoTengaDepartamentos implements Rule<Object> {
         var daoFactory = (DaoFactory) datos[1];
         var resultados = daoFactory.obtenerDepartamentoDAO().consultarDepartamentosAsociados(idPais);
 
-        for (var departamentoEncontrado : resultados) {
-            if (!departamentoEncontrado.getId().equals(idPais)) {
+        if ( !resultados.isEmpty()) {
                 var mensajeUsuario = "El pais tiene departamentos asociados";
                 throw LibreriaUcoNegocioExcepcion.crear(mensajeUsuario);
-            }
         }
-
     }
 }
