@@ -24,7 +24,8 @@ async function llamarApi(url, metodo, cuerpo) {
     }
     if (metodo !== "GET") {
         const csrf = await (await fetch("/api/v1/csrf")).json();
-        opciones.headers[csrf.nombreEncabezado] = csrf.token;
+        opciones.headers[csrf.headerName] = csrf.token;
+
     }
     const respuesta = await fetch(url, opciones);
     const json = await respuesta.json();
@@ -85,14 +86,17 @@ formulario.addEventListener("submit", async evento => {
     const datos = { nombre: campoNombre.value };
     try {
         let respuesta;
-        if (campoId.value) {
+        const esModificacion = campoId.value;
+        if (esModificacion){
             respuesta = await llamarApi(concatenar(URL_PAISES, "/", campoId.value), "PUT", datos);
         } else {
             respuesta = await llamarApi(URL_PAISES, "POST", datos);
         }
         mostrarMensaje(respuesta.mensajes[0], "exito");
         limpiarFormulario();
-        consultarPaises(filtroNombre.value);
+        if (esModificacion) {
+            await consultarPaises(filtroNombre.value);
+        }
     } catch (error) {
         mostrarMensaje(error.message, "error");
     }
@@ -122,7 +126,7 @@ async function eliminarPais(pais) {
     try {
         const respuesta = await llamarApi(concatenar(URL_PAISES, "/", pais.id), "DELETE");
         mostrarMensaje(respuesta.mensajes[0], "exito");
-        consultarPaises(filtroNombre.value);
+       await consultarPaises(filtroNombre.value);
     } catch (error) {
         mostrarMensaje(error.message, "error");
     }
@@ -130,9 +134,11 @@ async function eliminarPais(pais) {
 
 botonCancelar.addEventListener("click", limpiarFormulario);
 botonBuscar.addEventListener("click", () => consultarPaises(filtroNombre.value));
-botonLimpiar.addEventListener("click", () => {
-    filtroNombre.value = "";
-    consultarPaises();
+
+botonLimpiar.addEventListener("click",
+    async function () {
+        filtroNombre.value = "";
+        await consultarPaises();
 });
 
 listaPaises.innerHTML = '<p class="aviso">Busca un país o presiona "Ver todos"</p>';

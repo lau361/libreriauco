@@ -17,7 +17,7 @@ public class SqlServerDAOFactory extends DaoFactory {
     private static final String URL =
             "jdbc:sqlserver://localhost:1433;databaseName=Doo;encrypt=true;trustServerCertificate=true";
     private static final String USUARIO = "javaUser";
-    private static final String CLAVE = "1040874176";
+    private static final String CLAVE = System.getenv("LIBRERIAUCO_DB_CLAVE");;
 
     private static final HikariDataSource POOL = crearPool();
     private static HikariDataSource crearPool() {
