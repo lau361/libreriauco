@@ -1,5 +1,6 @@
 const URL_PAISES = "/api/v1/paises";
-
+const SOLO_LETRAS_Y_ESPACIOS = /^[a-zA-Z ÑñáÁéÉíÍóÓúÚ]*$/;
+const FORMATO_ID = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 const formulario = document.getElementById("formularioPais");
 const campoId = document.getElementById("idPais");
 const campoNombre = document.getElementById("nombrePais");
@@ -16,6 +17,41 @@ const tipoBusqueda = document.getElementById("tipoBusqueda");
 function concatenar(...partes) {
     return partes.join("");
 }
+function validarObligatoriedad(dato){
+    if(dato.trim()===""){
+        mostrarMensaje("El nombre del pais es obligatorio,Asegurese que este entre 1 y 50 caracteres " , "error");
+        return false;
+    }
+    return true;
+}
+function validarFormato(dato){
+    if(!SOLO_LETRAS_Y_ESPACIOS.test(dato.trim())){
+        mostrarMensaje("El nombre del pais debe tener unicamente letras de la a a la z ya sean mayusculas o minusculas " , "error");
+        return false;
+    }
+    return true;
+}
+function validarId(id){
+    if(!FORMATO_ID.test(id)){
+        mostrarMensaje("El id no tiene un formato valido , recuerde copiarlo completo " , "error");
+        return false;
+    }
+    return true;
+}
+function validarLongitud(dato){
+    if(! (dato.trim().length >= 1 && dato.trim().length <= 50)){
+        mostrarMensaje("El nombre del pais debe estar entre 1 y 50 caracteres", "error");
+        return false;
+    }
+    return true;
+}
+function validarNombrePais(dato){
+    if(!(validarObligatoriedad(dato) && validarFormato(dato)&& validarLongitud(dato))){
+        return false;
+    }
+    return true;
+}
+
 
 async function llamarApi(url, metodo, cuerpo) {
     const opciones = { method: metodo, headers: { "Content-Type": "application/json" } };
@@ -45,6 +81,9 @@ async function consultarPaises(nombre) {
     try {
         let url = URL_PAISES;
         if (nombre && tipoBusqueda.value === "id") {
+            if(!validarId(nombre.trim())){
+                return;
+            }
             url = concatenar(URL_PAISES, "/", nombre.trim());
         } else if (nombre) {
             url = concatenar(URL_PAISES, "?nombre=", encodeURIComponent(nombre));
@@ -84,6 +123,9 @@ function pintarTabla(paises) {
 
 formulario.addEventListener("submit", async evento => {
     evento.preventDefault();
+    if(!validarNombrePais(campoNombre.value)){
+        return;
+    }
     const datos = { nombre: campoNombre.value };
     try {
         let respuesta;
@@ -127,7 +169,7 @@ async function eliminarPais(pais) {
     try {
         const respuesta = await llamarApi(concatenar(URL_PAISES, "/", pais.id), "DELETE");
         mostrarMensaje(respuesta.mensajes[0], "exito");
-       await consultarPaises(filtroNombre.value);
+        await consultarPaises(filtroNombre.value);
     } catch (error) {
         mostrarMensaje(error.message, "error");
     }
@@ -140,6 +182,6 @@ botonLimpiar.addEventListener("click",
     async function () {
         filtroNombre.value = "";
         await consultarPaises();
-});
+    });
 
 listaPaises.innerHTML = '<p class="aviso">Busca un país o presiona "Ver todos"</p>';
