@@ -7,6 +7,7 @@ import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.SqlServer.CiudadSqlS
 import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.SqlServer.DepartamentoSqlServerDao;
 import co.edu.uco.libreriauco.libreriauco.dao.datos.entidad.SqlServer.PaisSqlServerDao;
 import co.edu.uco.libreriauco.libreriauco.dao.factoria.DaoFactory;
+import co.edu.uco.libreriauco.libreriauco.transversal.excepciones.LibreriaUcoDatosExcepcion;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -17,7 +18,7 @@ public class SqlServerDAOFactory extends DaoFactory {
     private static final String URL =
             "jdbc:sqlserver://localhost:1433;databaseName=Doo;encrypt=true;trustServerCertificate=true";
     private static final String USUARIO = "javaUser";
-    private static final String CLAVE = System.getenv("LIBRERIAUCO_DB_CLAVE");;
+    private static final String CLAVE = System.getenv("LIBRERIAUCO_DB_CLAVE");
 
     private static final HikariDataSource POOL = crearPool();
     private static HikariDataSource crearPool() {
@@ -38,7 +39,7 @@ public class SqlServerDAOFactory extends DaoFactory {
             Connection conexion = POOL.getConnection();
             setConexion(conexion);
         } catch (SQLException e) {
-            throw new IllegalArgumentException("No se pudo conectar a SQL Server", e);
+            throw  LibreriaUcoDatosExcepcion.crear( "No se pudo conectar a SQL Server", e.getMessage(),e);
         }
     }
 

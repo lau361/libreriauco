@@ -85,9 +85,13 @@ async function consultarPaises(nombre) {
                 return;
             }
             url = concatenar(URL_PAISES, "/", nombre.trim());
-        } else if (nombre) {
+        } else if (nombre && nombre.trim() !=="") {
+            if(!validarFormato(nombre)){
+                return;
+            }
             url = concatenar(URL_PAISES, "?nombre=", encodeURIComponent(nombre));
         }
+
         const respuesta = await llamarApi(url, "GET");
         pintarTabla(respuesta.datos);
     } catch (error) {
@@ -153,6 +157,7 @@ function prepararEdicion(pais) {
     botonCancelar.classList.remove("oculto");
     campoNombre.focus();
 }
+
 
 function limpiarFormulario() {
     campoId.value = "";

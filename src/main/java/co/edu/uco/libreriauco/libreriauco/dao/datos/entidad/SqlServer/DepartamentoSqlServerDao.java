@@ -165,11 +165,11 @@ public class DepartamentoSqlServerDao extends SqlDAO implements DepartamentoDao{
 
         } catch (SQLException excepcion) {
             //el controlado
-            var mensajeUsuario = CatalogoMensajes.PaisSqlServerDao.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAIS_POR_FILTRO;
+            var mensajeUsuario = CatalogoMensajes.DepartamentoSqlServerDao.USUARIO_ERROR_PROBLEMA_CONSULTANDO_DEPARTAMENTO_POR_FILTRO;
             throw LibreriaUcoDatosExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
         } catch (Exception excepcion) {
             //no controlado
-            var mensajeUsuario = CatalogoMensajes.PaisSqlServerDao.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAIS_POR_FILTRO;
+            var mensajeUsuario = CatalogoMensajes.DepartamentoSqlServerDao.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_DEPARTAMENTO_POR_FILTRO;
             throw LibreriaUcoDatosExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
         }
         return departamentosEncontrados;

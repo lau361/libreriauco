@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 public class PaisSqlServerDao extends SqlDAO implements PaisDAO {
     //aqui estoy diciendo este logger es el de mi dao pais
-    private static final Logger Logger_ = LoggerFactory.getLogger(PaisSqlServerDao.class);
+    private static final Logger Logger = LoggerFactory.getLogger(PaisSqlServerDao.class);
 
     public PaisSqlServerDao(Connection conexion) {
         super(conexion);
@@ -48,30 +48,30 @@ public class PaisSqlServerDao extends SqlDAO implements PaisDAO {
     @Override
     public PaisEntidad consultarPorId(UUID uuid) {
         var sentenciaSql="select id, nombre from pais where id=?";
-        var PaisEncontrado= new PaisEntidad.Builder().build();
-        Logger_.info("Se inicio la consulta del pais con id {}", uuid);
+        var paisEncontrado= new PaisEntidad.Builder().build();
+        Logger.info("Se inicio la consulta del pais con id {}", uuid);
         try(var sentencia= getConexion().prepareStatement(sentenciaSql)){
             sentencia.setObject(1,uuid);
             var resultado = sentencia.executeQuery();
             if(resultado.next()){
-                PaisEncontrado = new PaisEntidad.Builder().id(UUID.fromString(resultado.getString("id"))).nombre(resultado.getString("nombre")).build();
-                Logger_.info("Pais encontrado : {}", PaisEncontrado.getNombre());
+                paisEncontrado = new PaisEntidad.Builder().id(UUID.fromString(resultado.getString("id"))).nombre(resultado.getString("nombre")).build();
+                Logger.info("Pais encontrado : {}", paisEncontrado.getNombre());
             }else{
-                Logger_.warn("No se encontro ningun pais con id {}", uuid);
+                Logger.warn("No se encontro ningun pais con id {}", uuid);
             }
         }catch (SQLException excepcion){
-            Logger_.error("Error de conexion con la base de datos consultando el pais con id {}", uuid, excepcion);
+            Logger.error("Error de conexion con la base de datos consultando el pais con id {}", uuid, excepcion);
             var mensajeUsuario = CatalogoMensajes.PaisSqlServerDao.USUARIO_ERROR_PROBLEMA_CONSULTANDO_PAIS_POR_ID;
             throw LibreriaUcoDatosExcepcion.crear(mensajeUsuario,excepcion.getMessage(),excepcion);
             //el controlado
         } catch (Exception excepcion) {
             //no controlado
-            Logger_.error("Error NO CONTROLADO de conexion con la base de datos consultando el pais con id {}", uuid, excepcion);
+            Logger.error("Error NO CONTROLADO de conexion con la base de datos consultando el pais con id {}", uuid, excepcion);
 
             var mensajeUsuario = CatalogoMensajes.PaisSqlServerDao.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_PAIS_POR_ID;
             throw LibreriaUcoDatosExcepcion.crear(mensajeUsuario,excepcion.getMessage(),excepcion);
         }
-        return PaisEncontrado;
+        return paisEncontrado;
     }
 
     //bn
