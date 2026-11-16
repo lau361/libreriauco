@@ -58,15 +58,22 @@ async function llamarApi(url, metodo, cuerpo) {
     if (cuerpo) {
         opciones.body = JSON.stringify(cuerpo);
     }
+    let respuesta;
+    try{
     if (metodo !== "GET") {
         const csrf = await (await fetch("/api/v1/csrf")).json();
         opciones.headers[csrf.headerName] = csrf.token;
 
     }
-    const respuesta = await fetch(url, opciones);
+      respuesta = await fetch(url, opciones);
+    }
+    catch (error){
+        throw new Error("Se presentó un problema con el servidor");
+
+    }
     const json = await respuesta.json();
     if (!respuesta.ok) {
-        throw new Error(json.mensajes && json.mensajes.length > 0 ? json.mensajes[0] : "Se presentó un problema inesperado");
+        throw new Error(json.mensajes && json.mensajes.length > 0 ? json.mensajes[0] :"Se presentó un problema inesperado");
     }
     return json;
 }
